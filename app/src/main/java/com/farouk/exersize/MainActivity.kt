@@ -30,13 +30,13 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.window.Dialog
 import androidx.compose.ui.window.DialogProperties
 import com.farouk.exersize.base.viewmodel.BaseViewModel
+import com.farouk.exersize.features.splash.presentaiton.SplashScreen
 import com.farouk.exersize.theme.ExersizeTheme
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
-    private val baseViewModel: BaseViewModel by viewModels()
-    var userOnline = baseViewModel.onlineNow.value
+
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -47,7 +47,9 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-
+                    val baseViewModel: BaseViewModel by viewModels()
+                    var userOnline = baseViewModel.onlineNow.value
+                    SplashScreen()
 
                 }
             }

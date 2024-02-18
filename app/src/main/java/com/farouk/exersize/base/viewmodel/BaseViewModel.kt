@@ -13,11 +13,8 @@ import javax.inject.Inject
 class BaseViewModel @Inject constructor(
 ): ViewModel() {
 
-
     private val _onlineNow = mutableStateOf(false)
     val onlineNow: State<Boolean> get() = _onlineNow
-
-
 
 
     private fun handleConnectivityStatus(status: ConnectivityObserver.Status) {

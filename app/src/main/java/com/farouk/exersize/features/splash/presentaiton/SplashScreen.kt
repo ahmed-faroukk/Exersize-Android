@@ -1,27 +1,50 @@
 package com.farouk.exersize.features.splash.presentaiton
 
+import android.annotation.SuppressLint
 import androidx.compose.animation.core.tween
+import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
+import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.farouk.exersize.R
 import com.farouk.exersize.base.animations.AFAnimateAsFloat
 import com.farouk.exersize.features.splash.presentaiton.components.ShowLogo
 
-@Composable
-fun SplashScreen(
-    viewModel: SplashViewModel = hiltViewModel()
-) {
+object SplashScreen : Screen {
+    @Composable
+    override fun Content() {
+        SplashScreen()
+    }
 
-    AFAnimateAsFloat(
-        delay = 300,
-        initValue = 400f,
-        targetValue = 300f,
-        animationSpec = tween(100),
-        content = { modifier , isVisible ->
-        ShowLogo(modifier = modifier , R.drawable.sec_logo , 400f)
-        if (isVisible.value)
-        ShowLogo(modifier = modifier , R.drawable.main_logo , 400f)
-    })
+    @SuppressLint("SuspiciousIndentation")
+    @Composable
+    fun SplashScreen(
+         viewModel: SplashViewModel = hiltViewModel()
+    ) {
+        val navigator = LocalNavigator.currentOrThrow
+        viewModel.navigateTo(navigator)
+        AFAnimateAsFloat(
+            delay = 500,
+            initValue = 400f,
+            targetValue = 300f,
+            animationSpec = tween(100),
+            content = { modifier, isVisible ->
+                ShowLogo(modifier = modifier, R.drawable.sec_logo, 300f)
+                if (isVisible.value)
+                    ShowLogo(
+                        modifier = modifier.padding(bottom = 80.dp),
+                        R.drawable.main_logo,
+                        400f
+                    )
+            } )
+
+
+    }
+
+
 }
 

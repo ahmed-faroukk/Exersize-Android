@@ -3,6 +3,7 @@ plugins {
     id("org.jetbrains.kotlin.android")
     id("kotlin-kapt")
     id("dagger.hilt.android.plugin")
+    kotlin("plugin.serialization") version "1.9.22"
 }
 
 android {
@@ -109,7 +110,10 @@ dependencies {
     implementation("androidx.compose.material3:material3:1.0.0-alpha12")
     implementation("androidx.compose.material3:material3-window-size-class:1.0.0-alpha12")
 
+    //Datastore
+    implementation("androidx.datastore:datastore-preferences:1.0.0")
 
+    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.3.0")
         // voyager
         val voyagerVersion = "1.0.0"
 
@@ -132,7 +136,8 @@ dependencies {
         implementation("cafe.adriel.voyager:voyager-hilt:$voyagerVersion")
 
 
-
+    //serialization
+    implementation ("org.jetbrains.kotlinx:kotlinx-serialization-json:1.6.3")
 
 
 

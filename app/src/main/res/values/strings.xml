@@ -1,3 +1,9 @@
 <resources>
     <string name="app_name">Exersize</string>
+    <string name="onboarding1_title">"Make the body of your dreams "</string>
+    <string name="onboarding2_title">Choose the right trainer for you</string>
+    <string name="onboarding3_title">You can track your body</string>
+    <string name="onboarding1_body">Make your body the perfect shape you want</string>
+    <string name="onboarding2_body">You can choose the right trainer for you through a list of highly qualified trainers</string>
+    <string name="onboarding3_body">You can track the rate of change in your body during the training period through monthly reports</string>
 </resources>

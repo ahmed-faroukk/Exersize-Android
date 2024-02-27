@@ -15,12 +15,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.farouk.exersize.R
+import com.farouk.exersize.theme.blue3
 
 @Composable
 fun ShowLogo(modifier: Modifier = Modifier , img: Int, size: Float) {
     Column(
         modifier = Modifier
-            .background(MaterialTheme.colorScheme.primary)
+            .background(blue3)
             .fillMaxSize(), verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {

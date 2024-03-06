@@ -2,11 +2,9 @@ package com.farouk.exersize.features.onBoarding
 
 import OnBoardingPage
 import android.annotation.SuppressLint
-import android.content.res.Resources.Theme
 import androidx.compose.animation.core.FastOutSlowInEasing
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.ExperimentalFoundationApi
-import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -16,37 +14,29 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.navigationBarsPadding
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.pager.HorizontalPager
 import androidx.compose.foundation.pager.PagerState
 import androidx.compose.foundation.pager.rememberPagerState
-import androidx.compose.foundation.shape.CircleShape
-import androidx.compose.foundation.shape.RoundedCornerShape
-import androidx.compose.material3.ButtonDefaults
-import androidx.compose.material3.IconButton
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TextButton
 import androidx.compose.runtime.Composable
-import androidx.compose.runtime.MutableState
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
 import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.draw.clip
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import androidx.hilt.navigation.compose.hiltViewModel
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.navigator.LocalNavigator
+import cafe.adriel.voyager.navigator.currentOrThrow
 import com.CyberDunkers.Sla7ly.presentation.onBoarding.components.PageIndicator
-import com.farouk.exersize.R
+import com.farouk.exersize.features.authentication.presentation.AuthStart
 import com.farouk.exersize.features.onBoarding.Page.Companion.listOfPages
 import com.farouk.exersize.features.onBoarding.components.RoundedBtn
 import kotlinx.coroutines.launch
 class OnboardingScreen : Screen {
+
     @Composable
     override fun Content() {
         OnBoardingScreen()
@@ -57,6 +47,7 @@ class OnboardingScreen : Screen {
     fun OnBoardingScreen(
         viewModel: OnBoardingViewModel = hiltViewModel()
     ) {
+        val navigator = LocalNavigator.currentOrThrow
 
         val pageState = rememberPagerState(
             initialPage = 0,
@@ -133,6 +124,7 @@ class OnboardingScreen : Screen {
                     FinishButton({
                         // navigate
                         viewModel.saveAppEntry()
+                        navigator.push(AuthStart())
 
                     })
 

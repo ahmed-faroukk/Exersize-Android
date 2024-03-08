@@ -1,5 +1,8 @@
 package com.farouk.exersize.features.authentication.data.repository
 
+import com.farouk.exersize.features.authentication.data.Model.codeVerfication.ResendCodeResponse
+import com.farouk.exersize.features.authentication.data.Model.codeVerfication.VerifyCodeModel
+import com.farouk.exersize.features.authentication.data.Model.codeVerfication.VerifyCodeResponse
 import com.farouk.exersize.features.authentication.data.remote.AuthApiInterface
 import com.farouk.exersize.features.authentication.domain.entity.login.UserLoginModel
 import com.farouk.exersize.features.authentication.domain.entity.login.UserLoginResponse
@@ -16,4 +19,8 @@ class AuthRepoImpl @Inject constructor(
 
     override suspend fun userSignup(userSignupModel: UserSignupModel): UserSignupResponse =
         authApiInterface.userSignup(userSignupModel)
+
+    override suspend fun resendCode(phone: String): ResendCodeResponse = authApiInterface.resendCode(phone)
+    override suspend fun verifyCode(verifyCodeModel: VerifyCodeModel): VerifyCodeResponse =
+        authApiInterface.verifyCode(verifyCodeModel)
 }

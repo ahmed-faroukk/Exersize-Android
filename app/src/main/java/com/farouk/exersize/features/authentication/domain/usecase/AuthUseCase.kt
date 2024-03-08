@@ -1,6 +1,8 @@
 package com.farouk.exersize.features.authentication.domain.usecase
 
 data class AuthUseCase (
-    private val userLoginUseCase: UserLoginUseCase,
-    private val userSignupUseCase: UserSignupUseCase
+     val userLoginUseCase: UserLoginUseCase,
+     val userSignupUseCase: UserSignupUseCase ,
+     val resendCodeUseCase: ResendCodeUseCase,
+     val verifyCodeUseCase: VerifyCodeUseCase
 )

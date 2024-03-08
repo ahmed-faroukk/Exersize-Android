@@ -6,4 +6,23 @@
     <string name="onboarding1_body">Make your body the perfect shape you want</string>
     <string name="onboarding2_body">You can choose the right trainer for you through a list of highly qualified trainers</string>
     <string name="onboarding3_body">You can track the rate of change in your body during the training period through monthly reports</string>
+    <string name="create_your_account">Create your Account</string>
+    <string name="enter_your_details_to_continue">Enter your details to continue</string>
+    <string name="mobile_number">Mobile number</string>
+    <string name="enter_your_phone_number">enter your phone number</string>
+    <string name="create_an_account">Create an account</string>
+    <string name="already_a_member">Already a member?</string>
+    <string name="signup">Signup</string>
+    <string name="verfied_your_number">Verfied Your Number</string>
+    <string name="we_sent_you_a_code_please_enter_it">We sent you a code, please enter it</string>
+    <string name="continue_btn">Continue</string>
+    <string name="verfied_your_numberr">Verfied Your Number</string>
+    <string name="login">Login</string>
+    <string name="enter_your_last_name">enter your last name</string>
+    <string name="last_name">Last name</string>
+    <string name="enter_your_first_name">enter your first name</string>
+    <string name="first_name">First name</string>
+    <string name="don_t_have_account">don\'t have account ?</string>
+    <string name="enter_your_mobile_number">enter your mobile number</string>
+    <string name="welcome_back">welcome back</string>
 </resources>

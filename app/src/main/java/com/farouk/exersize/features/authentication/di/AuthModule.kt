@@ -5,8 +5,10 @@ import com.farouk.exersize.features.authentication.data.remote.AuthApiInterface
 import com.farouk.exersize.features.authentication.data.repository.AuthRepoImpl
 import com.farouk.exersize.features.authentication.domain.repository.AuthRepo
 import com.farouk.exersize.features.authentication.domain.usecase.AuthUseCase
+import com.farouk.exersize.features.authentication.domain.usecase.ResendCodeUseCase
 import com.farouk.exersize.features.authentication.domain.usecase.UserLoginUseCase
 import com.farouk.exersize.features.authentication.domain.usecase.UserSignupUseCase
+import com.farouk.exersize.features.authentication.domain.usecase.VerifyCodeUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -55,6 +57,8 @@ object AuthModule {
     @Singleton
     fun provideAuthUseCases(authRepo: AuthRepo) = AuthUseCase(
         UserLoginUseCase(authRepo),
-        UserSignupUseCase(authRepo)
+        UserSignupUseCase(authRepo),
+        ResendCodeUseCase(authRepo),
+        VerifyCodeUseCase(authRepo)
     )
 }

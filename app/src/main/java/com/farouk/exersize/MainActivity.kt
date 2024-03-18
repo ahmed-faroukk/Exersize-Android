@@ -3,56 +3,88 @@ package com.farouk.exersize
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
-import androidx.activity.viewModels
-import androidx.compose.foundation.Image
-import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Box
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
-import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
-import androidx.compose.material3.Text
-import androidx.compose.runtime.Composable
-import androidx.compose.ui.Alignment
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.collectAsState
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.layout.ContentScale
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.semantics.Role.Companion.Image
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
-import androidx.compose.ui.window.Dialog
-import androidx.compose.ui.window.DialogProperties
+import androidx.lifecycle.lifecycleScope
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
-import com.farouk.exersize.base.viewmodel.BaseViewModel
+import com.farouk.exersize.base.Connectivity.ConnectivityObserver
+import com.farouk.exersize.base.Connectivity.ConnectivityObserver.Status
+import com.farouk.exersize.base.Connectivity.NetworkConnectivityObserver
+import com.farouk.exersize.base.composables.InfoDialog
 import com.farouk.exersize.features.splash.presentaiton.SplashScreen
 import com.farouk.exersize.theme.ExersizeTheme
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.delay
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
 
-
+    private lateinit var connectivityObserver: ConnectivityObserver
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+        connectivityObserver = NetworkConnectivityObserver(applicationContext)
         setContent {
+            val infoDialog = remember { mutableStateOf(true) }
+            val firstLost = remember { mutableStateOf(true) }
+            val status = connectivityObserver.observe().collectAsState(
+                initial = Status.Available
+            )
             ExersizeTheme {
                 // A surface container using the 'background' color from the theme
                 Surface(
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                 ) {
-                    val baseViewModel: BaseViewModel by viewModels()
-                    var userOnline = baseViewModel.onlineNow.value
+                    if (status.value != Status.Available && infoDialog.value) {
+                        InfoDialog(
+                            title = "Whoops!",
+                            desc = "No Internet Connection found.\n" +
+                                    "Check your connection or try again.",
+                            onDismiss = {
+                                infoDialog.value = false
+                                firstLost.value = false
+                            }
 
-                   Navigator(screen = SplashScreen ,  content = { navigator -> SlideTransition(navigator) } )
+                        )
+
+
+                    }
+
+                    if (status.value == Status.Available && !firstLost.value) {
+                        InfoDialog(
+                            title = "Back Online",
+                            desc = "your connection is back again",
+                            imgId = R.drawable.outline_wifi_24,
+                            onDismiss = {
+                                infoDialog.value = true
+                                firstLost.value = true
+                            }
+                        )
+
+                    }
+                    LaunchedEffect(key1 = Unit) {
+                        if (!infoDialog.value) {
+                            lifecycleScope.launch {
+                                delay(5000)
+                            }.invokeOnCompletion {
+                                infoDialog.value = true
+                            }
+                        }
+                    }
+
+
+
+                    Navigator(
+                        screen = SplashScreen,
+                        content = { navigator -> SlideTransition(navigator) })
 
                 }
             }

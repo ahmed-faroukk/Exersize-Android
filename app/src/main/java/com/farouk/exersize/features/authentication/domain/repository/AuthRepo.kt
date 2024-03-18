@@ -14,6 +14,4 @@ interface AuthRepo {
     suspend fun resendCode(phone : String) : ResendCodeResponse
     suspend fun verifyCode(verifyCodeModel: VerifyCodeModel) : VerifyCodeResponse
 
-
-
 }

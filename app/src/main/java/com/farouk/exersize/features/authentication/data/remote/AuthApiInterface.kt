@@ -9,8 +9,6 @@ import com.farouk.exersize.features.authentication.domain.entity.login.UserLogin
 import com.farouk.exersize.features.authentication.domain.entity.signup.UserSignupModel
 import com.farouk.exersize.features.authentication.domain.entity.signup.UserSignupResponse
 import retrofit2.http.Body
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
 import retrofit2.http.POST
 
 interface AuthApiInterface {

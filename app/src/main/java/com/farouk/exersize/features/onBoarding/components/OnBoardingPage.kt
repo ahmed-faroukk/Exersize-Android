@@ -102,10 +102,10 @@ fun OnBoardingPage(
                         .fillMaxWidth(),
                     visible = isVisible.value,
                     enter = slideInHorizontally(
-                        initialOffsetX = { -1000 }, animationSpec = tween(300)
+                        initialOffsetX = { -1000 }, animationSpec = tween(200)
                     ) + fadeIn(),
                     exit = slideOutHorizontally(
-                        targetOffsetX = { 1000 }, animationSpec = tween(300)
+                        targetOffsetX = { 1000 }, animationSpec = tween(200)
                     ) + fadeOut(),
                 ) {
                     Image(

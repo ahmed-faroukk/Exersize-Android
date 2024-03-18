@@ -1,10 +1,7 @@
 package com.farouk.exersize.features.authentication.domain.usecase
 
-import com.farouk.exersize.features.authentication.data.Model.codeVerfication.ResendCodeResponse
 import com.farouk.exersize.features.authentication.data.Model.codeVerfication.VerifyCodeModel
 import com.farouk.exersize.features.authentication.data.Model.codeVerfication.VerifyCodeResponse
-import com.farouk.exersize.features.authentication.domain.entity.login.UserLoginModel
-import com.farouk.exersize.features.authentication.domain.entity.login.UserLoginResponse
 import com.farouk.exersize.features.authentication.domain.repository.AuthRepo
 import com.farouk.exersize.utils.Resource
 import kotlinx.coroutines.flow.Flow

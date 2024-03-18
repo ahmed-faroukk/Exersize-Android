@@ -149,10 +149,10 @@ fun Start() {
             Spacer(modifier = Modifier.height(30.dp))
             RoundedBtn(onClick = {
                 navigator.push(LoginScreen())
-            }, text = "Login", textSizeSp = 25)
+            }, text = "Login", textSizeSp = 25 , textColor = blue2)
             RoundedBtn(onClick = {
                 navigator.push(SignupScreen())
-            }, text = "Signup", textSizeSp = 25)
+            }, text = "Signup", textSizeSp = 25 , textColor = blue2)
         }
     }
 }

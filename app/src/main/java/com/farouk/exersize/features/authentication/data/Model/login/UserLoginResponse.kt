@@ -1,6 +1,6 @@
 package com.farouk.exersize.features.authentication.domain.entity.login
 
 data class UserLoginResponse(
-    val data: Boolean,
-    val msg: Msg
+    val status: Boolean,
+    val error_msg: String
 )

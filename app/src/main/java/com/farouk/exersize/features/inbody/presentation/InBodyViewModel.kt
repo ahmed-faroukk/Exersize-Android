@@ -8,8 +8,9 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cafe.adriel.voyager.navigator.Navigator
+import com.farouk.exersize.features.home.presentaion.HomeScreen
+import com.farouk.exersize.features.inbody.Util.MultiPartUtil
 import com.farouk.exersize.features.inbody.domain.usecases.InBodyUseCase
-import com.farouk.exersize.features.profile.ProfileScreen
 import com.farouk.exersize.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -49,8 +50,8 @@ class InBodyViewModel @Inject constructor(
                 prepareStringPart(weight),
                 prepareStringPart(tall),
                 prepareStringPart(token),
-                preparePdfPart(context , inBodyFilePath),
-                prepareImagePart(imgFilePath)
+                pdfToMultiPartUtil(context , inBodyFilePath),
+                prepareImagePart( imgFilePath)
             ).onEach {
                 when (it) {
                     is Resource.Success -> {
@@ -69,7 +70,26 @@ class InBodyViewModel @Inject constructor(
             }.launchIn(viewModelScope)
         }
 
+    fun imgToMultiPartUtil(context: Context , url : Uri) : MultipartBody.Part {
 
+        val multiPartPhoto =
+            MultiPartUtil.fileToMultiPart(
+                context , url,
+                "img"
+            )
+        return multiPartPhoto
+
+    }
+    fun pdfToMultiPartUtil(context: Context , url : Uri) : MultipartBody.Part {
+
+        val multiPartPhoto =
+            MultiPartUtil.fileToMultiPart(
+                context , url,
+                "inbody_pdf"
+            )
+        return multiPartPhoto
+
+    }
 
     private fun preparePdfPart(context: Context,filePath: Uri): MultipartBody.Part {
         val realPath  = getRealPathFromURI(context = context , filePath)
@@ -105,7 +125,7 @@ class InBodyViewModel @Inject constructor(
         viewModelScope.launch {
             delay(3000)
         }.invokeOnCompletion {
-            navigator.replaceAll(ProfileScreen())
+            navigator.replaceAll(HomeScreen())
         }
     }
 

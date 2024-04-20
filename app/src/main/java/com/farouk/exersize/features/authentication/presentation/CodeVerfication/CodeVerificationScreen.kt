@@ -18,7 +18,7 @@ import com.farouk.exersize.features.authentication.presentation.AuthViewModel
 import com.farouk.exersize.features.authentication.presentation.components.LoadingDialog
 import com.farouk.exersize.features.authentication.presentation.login.components.ShowVerifyCodeErrorDialog
 import com.farouk.exersize.features.authentication.presentation.login.components.VerifyCodeUI
-import com.farouk.exersize.features.profile.ProfileScreen
+import com.farouk.exersize.features.inbody.presentation.steper.StepperScreen
 import com.farouk.exersize.theme.blue1
 
 data class CodeVerificationScreen(val phone: String) : Screen {
@@ -53,7 +53,7 @@ fun OTPLogin(
 
         state.data?.status == true -> {
             OTPColor.value = Color.Green
-            navigator.replaceAll(ProfileScreen())
+            navigator.replaceAll(StepperScreen())
 
         }
 

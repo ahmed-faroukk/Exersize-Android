@@ -27,6 +27,7 @@ import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import androidx.constraintlayout.compose.ConstraintLayout
+import com.farouk.exersize.theme.darkYellow
 
 @Composable
 fun Stepper(modifier: Modifier = Modifier,
@@ -128,7 +129,7 @@ private fun Step(modifier: Modifier = Modifier,
                     Icon(
                         imageVector = Icons.Default.Done,"done",
                         modifier=modifier.padding(4.dp),
-                        tint = Color.White)
+                        tint = darkYellow)
                 else
                     Text(
                         text = step.toString(),

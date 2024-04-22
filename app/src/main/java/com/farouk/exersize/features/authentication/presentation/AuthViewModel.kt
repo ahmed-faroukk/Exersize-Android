@@ -118,5 +118,4 @@ class AuthViewModel @Inject constructor(
 
     }
 
-
 }

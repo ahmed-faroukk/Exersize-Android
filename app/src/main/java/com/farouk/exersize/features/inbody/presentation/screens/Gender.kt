@@ -28,6 +28,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.painter.Painter
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -60,7 +61,8 @@ fun GenderScreen(
         Text(
             text = "What is your gender?",
             fontSize = 25.sp,
-            fontWeight = FontWeight.Bold
+            fontWeight = FontWeight.Bold ,
+            style = TextStyle(color = MaterialTheme.colorScheme.surface)
         )
         Spacer(Modifier.height(30.dp))
         CardOfGender(painter = painterResource(id = R.drawable.boy), type = "Male",isSelected =selectedGender.value==Gender.Male){

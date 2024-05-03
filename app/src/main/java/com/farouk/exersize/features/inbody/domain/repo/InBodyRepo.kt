@@ -12,7 +12,7 @@ interface InBodyRepo {
         weight: RequestBody,
         tall: RequestBody,
         token: RequestBody,
-        inbody_pdf: MultipartBody.Part,
+        inbody_pdf: MultipartBody.Part?,
         img: MultipartBody.Part,
     ): InBodyResponse
 

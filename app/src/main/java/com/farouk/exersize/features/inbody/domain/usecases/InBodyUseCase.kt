@@ -20,7 +20,7 @@ class InBodyUseCase @Inject constructor(
         weight: RequestBody,
         tall: RequestBody,
         token: RequestBody,
-        inbody_pdf: MultipartBody.Part,
+        inbody_pdf: MultipartBody.Part?,
         img: MultipartBody.Part
     ): Flow<Resource<InBodyResponse>> = flow {
         try {

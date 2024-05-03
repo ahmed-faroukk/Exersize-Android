@@ -3,6 +3,7 @@ package com.farouk.exersize.features.authentication.presentation
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.farouk.exersize.base.navigation.navbar.NavBarContainer
 import com.farouk.exersize.features.authentication.data.Model.codeVerfication.VerifyCodeModel
 import com.farouk.exersize.features.authentication.domain.entity.login.UserLoginModel
 import com.farouk.exersize.features.authentication.domain.entity.signup.UserSignupModel
@@ -11,16 +12,20 @@ import com.farouk.exersize.features.authentication.presentation.CodeVerfication.
 import com.farouk.exersize.features.authentication.presentation.CodeVerfication.VerifyCodeState
 import com.farouk.exersize.features.authentication.presentation.login.LoginState
 import com.farouk.exersize.features.authentication.presentation.signup.SignUpState
+import com.farouk.exersize.user.data.local.UserLocalDataSource
 import com.farouk.exersize.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
+import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
 class AuthViewModel @Inject constructor(
-    private val authUseCase: AuthUseCase
-) : ViewModel() {
+    private val authUseCase: AuthUseCase,
+    private val user: UserLocalDataSource,
+
+    ) : ViewModel() {
 
     private val _loginState = mutableStateOf(LoginState())
     val loginState = _loginState
@@ -35,8 +40,7 @@ class AuthViewModel @Inject constructor(
     val resendCodeState = _resendCodeState
 
 
-
-     fun createNewAccount(userSignupModel: UserSignupModel) {
+    fun createNewAccount(userSignupModel: UserSignupModel) {
 
         authUseCase.userSignupUseCase(userSignupModel).onEach {
             when (it) {
@@ -56,7 +60,7 @@ class AuthViewModel @Inject constructor(
 
     }
 
-     fun login(userLoginModel: UserLoginModel) {
+    fun login(userLoginModel: UserLoginModel) {
 
         authUseCase.userLoginUseCase(userLoginModel).onEach {
             when (it) {
@@ -76,12 +80,16 @@ class AuthViewModel @Inject constructor(
 
     }
 
-     fun verifyCode(verifyCodeModel: VerifyCodeModel) {
+    fun verifyCode(verifyCodeModel: VerifyCodeModel) {
 
         authUseCase.verifyCodeUseCase(verifyCodeModel).onEach {
             when (it) {
                 is Resource.Success -> {
+
                     _codeVerifyState.value = VerifyCodeState(data = it.data)
+                    it.data?.msg?.token?.let { it1 -> saveToken(it1) }
+                    println("--------------------------------------------------------------------- token from verify vm")
+                    println("${it.data?.msg?.token}")
                 }
 
                 is Resource.Loading -> {
@@ -89,15 +97,14 @@ class AuthViewModel @Inject constructor(
                 }
 
                 is Resource.Error -> {
-                    _codeVerifyState.value =
-                        VerifyCodeState(error = it.message ?: "error not found")
+                    _codeVerifyState.value = VerifyCodeState(error = it.message ?: "error not found")
                 }
             }
         }.launchIn(viewModelScope)
 
     }
 
-     fun resendCode(phone: String) {
+    fun resendCode(phone: String) {
 
         authUseCase.resendCodeUseCase(phone).onEach {
             when (it) {
@@ -117,5 +124,27 @@ class AuthViewModel @Inject constructor(
         }.launchIn(viewModelScope)
 
     }
+
+    fun navigateToHome(navigator: cafe.adriel.voyager.navigator.Navigator) {
+        viewModelScope.launch {
+            setloggin()
+            navigator.replaceAll(NavBarContainer())
+        }
+
+    }
+
+    fun saveToken(token: String) {
+        viewModelScope.launch {
+            user.saveToken(token)
+        }
+    }
+    fun setloggin(){
+        viewModelScope.launch {
+            user.setLoggedIn()
+        }
+    }
+
+
+
 
 }

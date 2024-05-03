@@ -1,12 +1,15 @@
 package com.farouk.exersize.features.menu.presentatoin
 
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
 import androidx.compose.ui.res.painterResource
+import cafe.adriel.voyager.hilt.getViewModel
+import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
+import com.farouk.exersize.LocalTopNavigator
 import com.farouk.exersize.R
+import com.mala.grad_project.Screenns.Menu.MenuScreen
 
 object MenuTab : Tab {
 
@@ -18,7 +21,7 @@ object MenuTab : Tab {
 
         return remember {
             TabOptions(
-                index = 0u,
+                index = 4u,
                 title = title,
                 icon = icon
             )
@@ -27,6 +30,20 @@ object MenuTab : Tab {
 
     @Composable
     override fun Content() {
-        Text(text = "home")
+        val viewModel: MenuViewModel = getViewModel()
+        val navigator = LocalTopNavigator.current
+
+        Navigator(AboutUsScreen() , content = {
+            MenuScreen(
+                logoutClick = {
+                              viewModel.updateUserData(navigator)
+                },
+                aboutUsClick = { /*TODO*/ },
+                onSwitchClick = { /*TODO*/ }) {
+
+            }
+        })
+
+        }
+
     }
-}

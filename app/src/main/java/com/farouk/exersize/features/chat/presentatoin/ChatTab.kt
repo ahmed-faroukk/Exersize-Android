@@ -1,8 +1,13 @@
 package com.farouk.exersize.features.menu.presentatoin
 
+import androidx.compose.foundation.layout.Arrangement
+import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
+import androidx.compose.ui.Alignment
+import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
@@ -18,7 +23,7 @@ object ChatTab : Tab {
 
         return remember {
             TabOptions(
-                index = 0u,
+                index = 3u,
                 title = title,
                 icon = icon
             )
@@ -27,6 +32,8 @@ object ChatTab : Tab {
 
     @Composable
     override fun Content() {
-        Text(text = "home")
+        Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = "Chat")
+        }
     }
 }

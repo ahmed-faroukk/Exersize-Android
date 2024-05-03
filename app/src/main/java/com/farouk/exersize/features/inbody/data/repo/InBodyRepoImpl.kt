@@ -16,7 +16,7 @@ class InBodyRepoImpl @Inject constructor(
         weight: RequestBody,
         tall: RequestBody,
         token: RequestBody,
-        inbody_pdf: MultipartBody.Part,
+        inbody_pdf: MultipartBody.Part?,
         img: MultipartBody.Part
     ): InBodyResponse = inBodyApiInterface.sendInBodyData(gender, age, weight, tall, token, inbody_pdf, img)
 

@@ -5,26 +5,32 @@
       <entry key="DefaultPreview">
         <State />
       </entry>
+      <entry key="HomPreview">
+        <State />
+      </entry>
       <entry key="HomePreview">
         <State />
       </entry>
-      <entry key="SuccessScreenPreview">
+      <entry key="HomePreview (1)">
+        <State />
+      </entry>
+      <entry key="VerifyPreview">
         <State />
       </entry>
       <entry key="app">
         <State>
-          <targetSelectedWithDropDown>
+          <runningDeviceTargetSelectedWithDropDown>
             <Target>
-              <type value="QUICK_BOOT_TARGET" />
+              <type value="RUNNING_DEVICE_TARGET" />
               <deviceKey>
                 <Key>
-                  <type value="VIRTUAL_DEVICE_PATH" />
-                  <value value="C:\Users\Ahmed\.android\avd\Pixel_3a_API_34_extension_level_7_x86_64.avd" />
+                  <type value="SERIAL_NUMBER" />
+                  <value value="adb-EUJB7PLVBIHANBFU-qC5J0e._adb-tls-connect._tcp" />
                 </Key>
               </deviceKey>
             </Target>
-          </targetSelectedWithDropDown>
-          <timeTargetWasSelectedWithDropDown value="2024-04-21T20:35:21.049083600Z" />
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-05-03T15:28:16.159167300Z" />
         </State>
       </entry>
     </value>

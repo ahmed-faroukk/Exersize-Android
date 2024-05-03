@@ -4,9 +4,9 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class UserDataModel(
-    val id : String ,
-    val name : String ,
-    val phone : String ,
+    val id : String? ,
+    val name : String? ,
+    val phone : String? ,
     val token :String ,
 
 )

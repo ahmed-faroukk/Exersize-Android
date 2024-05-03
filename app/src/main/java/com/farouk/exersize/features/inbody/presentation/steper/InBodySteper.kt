@@ -41,7 +41,6 @@ import com.farouk.exersize.features.inbody.presentation.composables.ShowInBodyEr
 import com.farouk.exersize.features.inbody.presentation.composables.ShowInBodyInfoDialog
 import com.farouk.exersize.features.inbody.presentation.screens.Gender
 import com.farouk.exersize.features.inbody.presentation.screens.GenderScreen
-import com.farouk.exersize.features.inbody.presentation.screens.SuccessScreen
 import com.farouk.exersize.features.inbody.presentation.screens.UploadImageScreen
 import com.farouk.exersize.features.inbody.presentation.screens.UploadInBodyScreen
 import com.farouk.exersize.features.inbody.presentation.screens.UserDataScreen
@@ -209,18 +208,20 @@ class StepperScreen() : Screen {
                             Log.d("age : ", age.value.toString())
                             Log.d("weight : ", weight.value.toString())
                             Log.d("pdf Path : ", selectedPdfUri.value.toString())
-                            Log.d("img Path : ", photoUri.value?.path.toString())
-                            navigator.replaceAll(SuccessScreen())
-                          /*  viewModel.sendInBodyData(
-                                gender = userGender.value.toString(),
-                                age = age.value,
-                                weight = weight.value,
-                                tall = tall.value,
-                                token = "",
-                                inBodyFilePath = selectedPdfUri.value,
-                                imgFilePath = photoUri.value?.path.toString(),
-                                context = context
-                            )*/
+                            Log.d("img Path : ", photoUri.value.toString())
+                          //  navigator.replaceAll(SuccessScreen())
+                            photoUri.value?.let {
+                                viewModel.sendInBodyData(
+                                    gender = userGender.value.toString(),
+                                    age = age.value,
+                                    weight = weight.value,
+                                    tall = tall.value,
+                                    token = "",
+                                    inBodyFilePath = selectedPdfUri.value,
+                                    imgFilePath = it,
+                                    context = context
+                                )
+                            }
                         }
                     },
                     enabled = currentStep <= numberStep,

@@ -7,8 +7,8 @@ import androidx.lifecycle.viewModelScope
 import com.farouk.exersize.features.home.domain.usecase.HomeUseCases
 import com.farouk.exersize.features.home.presentaion.Packages.GetPackagesState
 import com.farouk.exersize.features.home.presentaion.getAllCoaches.GetAllCoachesState
-import com.farouk.exersize.features.home.presentaion.getCoach.GetCoachState
-import com.farouk.exersize.features.home.presentaion.getCoach.GetPortfolioState
+import com.farouk.exersize.features.home.presentaion.getCoach.states.GetCoachState
+import com.farouk.exersize.features.home.presentaion.getCoach.states.GetPortfolioState
 import com.farouk.exersize.features.home.presentaion.reqPackage.ReqPackagesState
 import com.farouk.exersize.user.data.local.UserLocalDataSource
 import com.farouk.exersize.utils.Resource

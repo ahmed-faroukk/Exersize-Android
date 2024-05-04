@@ -1,6 +1,6 @@
-package com.farouk.exersize.features.home.presentaion.reqPackage
+package com.farouk.exersize.features.home.presentaion.getCoach.Screen
 
-import BlueButton
+import CoachScreenContent
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
@@ -17,53 +17,34 @@ import cafe.adriel.voyager.hilt.getViewModel
 import com.farouk.exersize.LocalTopNavigator
 import com.farouk.exersize.features.authentication.presentation.components.AFLoading
 import com.farouk.exersize.features.authentication.presentation.components.ErrorDialog
+import com.farouk.exersize.features.home.data.remote.HomeApiInterface
 import com.farouk.exersize.features.home.presentaion.HomeViewModel
-import com.farouk.exersize.features.inbody.presentation.screens.GifImage
-import com.farouk.exersize.theme.darkYellow
+import com.farouk.exersize.features.home.presentaion.Packages.PackagesScreen
 
-class ReqPackagesScreen( private val coachId : String , private val packageId : String) : Screen {
+class CoachDetails(private val id : String , private val rate : Float) : Screen {
 
     @Composable
     override fun Content() {
+        val viewModel: HomeViewModel = getViewModel()
+        CoachDetailsUi(viewModel, id)
+    }
+
+    @Composable
+    fun CoachDetailsUi(viewModel: HomeViewModel, id: String) {
         val navigator = LocalTopNavigator.current
 
-        val viewmodel: HomeViewModel = getViewModel()
-        val req = viewmodel.reqPackages.value
+        println("--------------------------------------------------------------------------------------------------")
         LaunchedEffect(key1 = Unit) {
-            viewmodel.reqPackages(coachId , packageId)
+            viewModel.getCoach(id)
         }
-
+        println(id)
         val dialog = remember {
             mutableStateOf(false)
         }
-
+        //viewModel.getCoachPortfolio(id)
+        val coach = viewModel.getCoach.value
         when {
-            req.data?.status == false ->{
-                Column(
-                    Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.primary),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    ErrorDialog(onDismissRequest = {
-                        navigator.pop()
-                    }, title = "Can not buy this package ", desc = "you have a package already with this coach try again after finish your subscription ")
-                }
-            }
-            req.data?.status == true ->{
-                Column(
-                    Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.primary),
-                    verticalArrangement = Arrangement.SpaceEvenly,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    GifImage()
-                    BlueButton(onClick = { navigator.pop() }, text = "back to home " , color = darkYellow)
-                }
-            }
-            req.isLoading -> {
+            coach.isLoading -> {
                 Column(
                     Modifier
                         .fillMaxSize()
@@ -80,17 +61,33 @@ class ReqPackagesScreen( private val coachId : String , private val packageId : 
 
             }
 
-            req.error.isNotEmpty() -> {
+            coach.data?.status == false -> {
+                dialog.value = true
+            }
+
+            coach.error.isNotEmpty() -> {
                 dialog.value = true
             }
 
             dialog.value -> {
                 ErrorDialog(onDismissRequest = {
                     dialog.value = false
-                }, title = "Error", desc = req.error.toString())
+                }, title = "Error", desc = coach.error.toString())
             }
         }
-
-
+        coach.data?.let {
+            CoachScreenContent(rate, it) {
+                navigator.replace(
+                    PackagesScreen(
+                        id,
+                        "${it.msg.fname} ${it.msg.lname}",
+                        "${HomeApiInterface.BASE_URL}${it.msg.personal_img}",
+                        it.msg.exp.toString() ,
+                        it.msg.trainees_number.toString(),
+                        rate
+                    )
+                )
+            }
+        }
     }
 }

@@ -24,7 +24,7 @@ fun CircleCoachImage(
 
     Box (
         contentAlignment = Alignment.TopStart,
-        modifier = Modifier.padding(top=20.dp, start = 10.dp)
+
     ){
         val borderWidth = 1.dp
 
@@ -35,7 +35,9 @@ fun CircleCoachImage(
             modifier = Modifier
                 .size(size.dp)
                 .padding(borderWidth)
-                .clip(RoundedCornerShape(50.dp))
+                .clip(RoundedCornerShape(120.dp))
+
+
 
 
         )

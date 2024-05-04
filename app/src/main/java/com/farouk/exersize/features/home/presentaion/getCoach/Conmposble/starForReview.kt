@@ -65,8 +65,8 @@ fun StarRatingBarCoach(
     maxStars: Int = 5,
     rating: Float,
     onRatingChanged: (Float) -> Unit,
-    paddingStart:Int?=null,
-    paddingEnd:Int?=null
+    paddingStart: Int? = null,
+    paddingEnd: Int? = null ,
 ) {
     val density = LocalDensity.current.density
     val starSize = (8f * density).dp
@@ -74,16 +74,15 @@ fun StarRatingBarCoach(
 
     Row(
         modifier = Modifier.selectableGroup()
-            .padding(start=paddingStart?.dp ?:1.dp),
+            .padding(start = paddingStart?.dp ?: 1.dp),
         verticalAlignment = Alignment.CenterVertically
-
     ) {
         for (i in 1..maxStars) {
             val isSelected = i <= rating
-            val icon = if (isSelected) Icons.Filled.Star else Icons.Default.Star
-            val iconTintColor = if (isSelected) Color(0xFFFFC700) else Color(0x20FFFFFF)
+            val iconTintColor = if (isSelected) Color(0xFFFFC700) else Color.LightGray // Change here for gray
+
             Icon(
-                imageVector = icon,
+                imageVector = if (isSelected) Icons.Filled.Star else Icons.Default.Star,
                 contentDescription = null,
                 tint = iconTintColor,
                 modifier = Modifier
@@ -100,7 +99,5 @@ fun StarRatingBarCoach(
                 Spacer(modifier = Modifier.width(starSpacing))
             }
         }
-
-
     }
 }

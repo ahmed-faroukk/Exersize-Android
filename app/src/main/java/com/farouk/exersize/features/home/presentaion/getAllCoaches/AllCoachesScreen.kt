@@ -1,6 +1,11 @@
 package com.mala.grad_project.Screenns.Home.screen
 
+import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.core.animateFloatAsState
+import androidx.compose.animation.core.tween
+import androidx.compose.animation.fadeIn
+import androidx.compose.animation.slideInVertically
+import androidx.compose.foundation.ExperimentalFoundationApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Arrangement
@@ -22,6 +27,8 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.LaunchedEffect
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
@@ -39,16 +46,28 @@ import com.farouk.exersize.R
 import com.farouk.exersize.features.authentication.presentation.components.AFLoading
 import com.farouk.exersize.features.authentication.presentation.components.ErrorDialog
 import com.farouk.exersize.features.home.data.remote.HomeApiInterface
-import com.farouk.exersize.features.home.presentaion.HomeTab.CoachDetails
 import com.farouk.exersize.features.home.presentaion.HomeViewModel
 import com.farouk.exersize.features.home.presentaion.composables.BellImage
 import com.farouk.exersize.features.home.presentaion.composables.CoachCard
+import com.farouk.exersize.features.home.presentaion.getCoach.Screen.CoachDetails
+import kotlinx.coroutines.delay
 
-@OptIn(ExperimentalMaterialApi::class)
+@OptIn(ExperimentalMaterialApi::class, ExperimentalFoundationApi::class)
 @Composable
 fun HomeUI(
     viewModel: HomeViewModel,
 ) {
+
+    val isVisible = remember {
+        mutableStateOf(false)
+    }
+    LaunchedEffect(isVisible.value) {
+        // Hide the box for 200 milliseconds
+        if (!isVisible.value) {
+            delay(1)
+            isVisible.value = true
+        }
+    }
 
     val navigator = LocalTopNavigator.current
 
@@ -90,36 +109,56 @@ fun HomeUI(
                 }, title = "Error", desc = coaches.error.toString())
             }
         }
-
-
         LazyColumn(
             Modifier
-                .fillMaxSize()
-                .padding(bottom = 50.dp),
+                .fillMaxWidth()
+              ,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
-                HomeHeader(viewModel)
+                HomeHeader(viewModel , isVisible)
             }
-            coaches.data?.let {
-                items(it.msg) {coach ->
-                    CoachCard(
-                        clintNum = coach.exp.toString(),
-                        name = "${coach.fname} ${coach.lname}",
-                        img = HomeApiInterface.BASE_URL + coach.personal_img
-                    ) {
-                            navigator.push(CoachDetails(coach.id.toString()))
-                    }
+        }
 
+        AnimatedVisibility(
+            modifier = Modifier
+                .fillMaxWidth(),
+            visible = isVisible.value,
+            enter = slideInVertically(
+                initialOffsetY = { 1000 }, animationSpec = tween(2000)
+            ) + fadeIn(),
+        ) {
+            LazyColumn(
+                Modifier
+                    .fillMaxSize()
+                    .padding(bottom = 50.dp),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+
+                coaches.data?.let {
+                    items(it.msg) {coach ->
+                        CoachCard(
+                            clintNum = coach.trainees_number.toString(),
+                            name = "${coach.fname} ${coach.lname}",
+                            img = HomeApiInterface.BASE_URL + coach.personal_img ,
+                            coach.rate ,
+                            modifier = Modifier.animateItemPlacement()
+                        ) {
+                            navigator.push(CoachDetails(coach.id.toString() , coach.rate))
+                        }
+
+                    }
                 }
             }
         }
+
     }
 }
 
 @Composable
 fun HomeHeader(
-    viewModel: HomeViewModel
+    viewModel: HomeViewModel ,
+    isVisible : MutableState<Boolean>
 ) {
     Box(
         Modifier
@@ -137,6 +176,7 @@ fun HomeHeader(
 
                 RetryIcon {
                     viewModel.getAllCoaches()
+                    isVisible.value = false
                 }
                 BellImage(painterResource(id = R.drawable.bell))
             }

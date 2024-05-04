@@ -1,10 +1,7 @@
 package com.farouk.exersize.features.onBoarding
 
-import android.content.Context
 import androidx.annotation.DrawableRes
-import androidx.compose.ui.platform.LocalContext
 import com.farouk.exersize.R
-import dagger.hilt.android.qualifiers.ApplicationContext
 
 
 data class Page(
@@ -24,13 +21,13 @@ data class Page(
 
 
             Page(
-                img = R.drawable.onboarding2,
+                img = R.drawable.onbo2,
                 title = R.string.onboarding2_title,
                 desc = R.string.onboarding2_body
             ),
 
             Page(
-                img = R.drawable.onboarding3,
+                img = R.drawable.onbo3,
                 title = R.string.onboarding3_title,
                 desc = R.string.onboarding3_body
 

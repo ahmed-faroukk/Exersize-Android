@@ -41,6 +41,7 @@ fun PackagesUI(
     coachName : String ,
     coachImg : String ,
     numOfClints : String ,
+    rate : Float,
     onContinueClick:(Int)-> Unit
 ) {
     val navigator = LocalTopNavigator.current
@@ -151,7 +152,7 @@ fun PackagesUI(
                                 fontSize = 20.sp,
                                 fontWeight = FontWeight.Bold
                             )
-                            StarRatingBarCoach(maxStars = 6, rating = 6f, onRatingChanged = {
+                            StarRatingBarCoach(maxStars = 6, rating = rate, onRatingChanged = {
                                 rating = it
                             }, paddingStart = 10)
 

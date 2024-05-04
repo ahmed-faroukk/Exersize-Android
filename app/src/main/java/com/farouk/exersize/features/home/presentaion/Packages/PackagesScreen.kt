@@ -16,25 +16,26 @@ import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
-import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.hilt.getViewModel
+import com.farouk.exersize.LocalTopNavigator
 import com.farouk.exersize.features.authentication.presentation.components.AFLoading
 import com.farouk.exersize.features.authentication.presentation.components.ErrorDialog
 import com.farouk.exersize.features.home.presentaion.HomeViewModel
-import com.farouk.exersize.features.inbody.presentation.screens.GifImage
+import com.farouk.exersize.features.home.presentaion.reqPackage.ReqPackagesScreen
 import com.mala.grad_project.Screenns.planCard.PackagesUI
 import kotlinx.coroutines.delay
 
-class PackagesScreen(val id : String ,val coachName : String ,val coachImg : String ,val NOC : String) : Screen {
+class PackagesScreen(val id : String ,val coachName : String ,val coachImg : String ,val NOC : String ,val  numOfClints : String ,val  rate : Float ) : Screen {
     @Composable
     override fun Content() {
         val isVisible = remember {
             mutableStateOf(false)
         }
 
+        val navigator = LocalTopNavigator.current
         val size by animateFloatAsState(
             targetValue = if (!isVisible.value) 0f else 200f,
             label = "", animationSpec = tween(1000)
@@ -51,14 +52,13 @@ class PackagesScreen(val id : String ,val coachName : String ,val coachImg : Str
 
         val viewmodel: HomeViewModel = getViewModel()
         val state = viewmodel.getPackages.value
-        val req = viewmodel.reqPackages.value
-
-        LaunchedEffect(key1 = Unit) {
-            viewmodel.getPackages(id)
-        }
         val dialog = remember {
             mutableStateOf(false)
         }
+        LaunchedEffect(key1 = Unit) {
+            viewmodel.getPackages(id.toString())
+        }
+
 
         when {
             state.isLoading -> {
@@ -89,47 +89,7 @@ class PackagesScreen(val id : String ,val coachName : String ,val coachImg : Str
             }
         }
 
-        when {
-            req.isLoading -> {
-                Column(
-                    Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.primary),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    AFLoading(
-                        color1 = MaterialTheme.colorScheme.surface,
-                        color2 = MaterialTheme.colorScheme.surface,
-                        color3 = MaterialTheme.colorScheme.surface
-                    )
-                }
 
-            }
-
-            req.error.isNotEmpty() -> {
-                dialog.value = true
-            }
-            req.data?.status == true -> {
-                Column(
-                    Modifier
-                        .fillMaxSize()
-                        .background(MaterialTheme.colorScheme.primary),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
-                ) {
-                    val scope = rememberCoroutineScope()
-                    GifImage()
-                }
-
-            }
-
-            dialog.value -> {
-                ErrorDialog(onDismissRequest = {
-                    dialog.value = false
-                }, title = "Error", desc = req.error.toString())
-            }
-        }
         AnimatedVisibility(
             modifier = Modifier
                 .fillMaxWidth(),
@@ -142,9 +102,10 @@ class PackagesScreen(val id : String ,val coachName : String ,val coachImg : Str
                 packages = it,
                 coachName = coachName,
                 coachImg = coachImg,
-                numOfClints = NOC
+                numOfClints = numOfClints,
+                rate = rate
             ){
-                viewmodel.reqPackages(coachId = id , packageId =  it.toString()  )
+                navigator.replace(ReqPackagesScreen(id.toString() , it.toString()))
             }
             }
         }

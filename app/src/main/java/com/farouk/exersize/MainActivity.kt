@@ -28,7 +28,7 @@ import com.farouk.exersize.base.Connectivity.ConnectivityObserver
 import com.farouk.exersize.base.Connectivity.ConnectivityObserver.Status
 import com.farouk.exersize.base.Connectivity.NetworkConnectivityObserver
 import com.farouk.exersize.base.composables.InfoDialog
-import com.farouk.exersize.base.navigation.navbar.NavBarContainer
+import com.farouk.exersize.features.splash.presentaiton.SplashScreen
 import com.farouk.exersize.service.ExersizeService
 import com.farouk.exersize.theme.ExersizeTheme
 import com.pusher.client.Pusher
@@ -110,7 +110,7 @@ class MainActivity : ComponentActivity() {
     fun AppNav() {
         foregroundService.startService(applicationContext)
         Navigator(
-            screen = NavBarContainer(),
+            screen = SplashScreen,
             content = { navigator ->
                 CompositionLocalProvider(value = LocalTopNavigator provides navigator) {
                     SlideTransition(navigator)
@@ -177,7 +177,7 @@ class MainActivity : ComponentActivity() {
             .build()
 
         // Use the notification manager to display the notification
-        notificationManager.notify(1, notification)
+        notificationManager.notify(2, notification)
     }
 
     companion object{

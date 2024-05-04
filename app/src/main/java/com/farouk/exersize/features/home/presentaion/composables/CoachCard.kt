@@ -9,6 +9,7 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.Card
 import androidx.compose.material3.CardDefaults
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
@@ -24,35 +25,39 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import coil.compose.rememberAsyncImagePainter
 import com.farouk.exersize.theme.darkYellow
+import com.mala.grad_project.Screenns.CoachScreen.Conmposble.StarRatingBarCoach
 
 @Composable
 fun CoachCard(
     clintNum : String,
     name : String,
     img : String,
-    onClick : ()  -> Unit
+    rate : Float,
+    modifier: Modifier ,
+
+    onClick : ()  -> Unit ,
 ) {
+
     var rating by remember { mutableStateOf(1f) }
-    Box(modifier = Modifier
 
-
+    Box(modifier = modifier
         .fillMaxWidth()
         .padding(25.dp)
         .shadow(elevation = 20.dp)
 
-
     )
     {
+
         Card(
             colors = CardDefaults.cardColors(
                 containerColor = Color.White
-            ), modifier = Modifier
+            ), modifier = modifier
                 .height(110.dp)
                 .clickable {
                     onClick()
                 }
         )
-         {
+        {
             Text(
                 text = "Captain : $name",
                 Modifier
@@ -60,17 +65,18 @@ fun CoachCard(
                     .fillMaxWidth(),
                 textAlign = TextAlign.Start,
                 fontSize = 13.sp,
-                fontWeight = FontWeight.Bold
+                fontWeight = FontWeight.Bold ,
+                color = MaterialTheme.colorScheme.surface
             )
-             Spacer(modifier = Modifier.height(10.dp))
-             ShowNumberofClients(number = clintNum , Modifier.padding(start = 50.dp))
-             StarRatingBar(maxStars =6, rating = 2.0f, onRatingChanged = {
-                rating = it
-            },90,10 )
+            Spacer(modifier = Modifier.height(1.dp))
+            ShowNumberofClients(number = clintNum , Modifier.padding(start = 50.dp))
+            StarRatingBarCoach(maxStars = 5, rating = rate, onRatingChanged = {} , paddingStart = 90)
+
         }
         CircleCoachImage(painter = rememberAsyncImagePainter(img),100)
 
     }
+
 
 }
 @Composable

@@ -12,6 +12,7 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
@@ -30,12 +31,16 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
+import coil.request.ImageRequest
 import com.farouk.exersize.LocalTopNavigator
+import com.farouk.exersize.features.authentication.presentation.components.AFLoading
 import com.farouk.exersize.features.home.data.remote.HomeApiInterface
 import com.farouk.exersize.features.home.domain.entity.CoachByIdResponse
 import com.farouk.exersize.theme.blue1
@@ -184,7 +189,20 @@ fun CoachInfo(rating: Float, name: String, numOfClints: String, img: String) {
             verticalArrangement = Arrangement.Center,
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
-            CircleCoachImage(rememberAsyncImagePainter(HomeApiInterface.BASE_URL + img), size = 150)
+            val painter = rememberAsyncImagePainter(
+                model = ImageRequest.Builder(LocalContext.current)
+                    .data(HomeApiInterface.BASE_URL + img)
+                    .size(coil.size.Size.ORIGINAL) // Set the target size to load the image at.
+                    .build()
+            )
+            Box {
+                if (painter.state is AsyncImagePainter.State.Loading) {
+                    Column(Modifier.size(100.dp) , verticalArrangement = Arrangement.SpaceEvenly , horizontalAlignment = Alignment.CenterHorizontally) {
+                        AFLoading(color1 = blue1 , color2 = blue1 , color3 = blue1 , circleSize = 5.dp)
+                    }
+                }else CircleCoachImage(painter, size = 150)
+
+            }
 
             Text(
                 text = "Captain: $name",

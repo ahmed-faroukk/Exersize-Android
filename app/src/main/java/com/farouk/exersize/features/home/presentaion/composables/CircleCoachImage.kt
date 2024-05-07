@@ -4,6 +4,7 @@ import androidx.compose.animation.core.tween
 import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.border
+import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
@@ -20,15 +21,18 @@ import com.farouk.exersize.theme.darkYellow
 @Composable
 fun CircleCoachImage(
     painter: Painter,
-    size:Int
+    size:Int ,
+    initSize  :Float = 20f,
+    targetSize : Float = 90f ,
+    onClick : () -> Unit = {}
 ) {
     val borderWidth = 2.dp
 
     Box (contentAlignment = Alignment.TopStart){
         AFAnimateAsFloat(
             delay = 500,
-            initValue = 20f,
-            targetValue = 90f,
+            initValue = initSize,
+            targetValue = targetSize,
             animationSpec = tween(100),
             content = { modifier, isVisible ->
                 if (isVisible.value)
@@ -44,8 +48,12 @@ fun CircleCoachImage(
                                 CircleShape
                             )
                             .clip(CircleShape)
+                            .clickable {
+                                onClick()
+                            }
                     )
-            } )
+            }
+        )
 
 
 

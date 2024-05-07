@@ -23,8 +23,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object HomeModule {
-
-    // create retrofit clint
     @Provides
     @Singleton
     fun provideApi(): HomeApiInterface {

@@ -12,6 +12,7 @@ import com.farouk.exersize.features.authentication.presentation.CodeVerfication.
 import com.farouk.exersize.features.authentication.presentation.CodeVerfication.VerifyCodeState
 import com.farouk.exersize.features.authentication.presentation.login.LoginState
 import com.farouk.exersize.features.authentication.presentation.signup.SignUpState
+import com.farouk.exersize.features.inbody.presentation.steper.StepperScreen
 import com.farouk.exersize.user.data.local.UserLocalDataSource
 import com.farouk.exersize.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -85,7 +86,7 @@ class AuthViewModel @Inject constructor(
         authUseCase.verifyCodeUseCase(verifyCodeModel).onEach {
             when (it) {
                 is Resource.Success -> {
-
+                    setloggin()
                     _codeVerifyState.value = VerifyCodeState(data = it.data)
                     it.data?.msg?.token?.let { it1 -> saveToken(it1) }
                     println("--------------------------------------------------------------------- token from verify vm")
@@ -97,7 +98,8 @@ class AuthViewModel @Inject constructor(
                 }
 
                 is Resource.Error -> {
-                    _codeVerifyState.value = VerifyCodeState(error = it.message ?: "error not found")
+                    _codeVerifyState.value =
+                        VerifyCodeState(error = it.message ?: "error not found")
                 }
             }
         }.launchIn(viewModelScope)
@@ -127,8 +129,9 @@ class AuthViewModel @Inject constructor(
 
     fun navigateToHome(navigator: cafe.adriel.voyager.navigator.Navigator) {
         viewModelScope.launch {
-            setloggin()
-            navigator.replaceAll(NavBarContainer())
+            if (codeVerifyState.value.data?.msg?.gender?.isNotEmpty() == true)
+                navigator.replaceAll(NavBarContainer())
+            else navigator.replace(StepperScreen())
         }
 
     }
@@ -138,13 +141,25 @@ class AuthViewModel @Inject constructor(
             user.saveToken(token)
         }
     }
-    fun setloggin(){
+
+    private fun setloggin() {
+
         viewModelScope.launch {
             user.setLoggedIn()
+        }.invokeOnCompletion {
+            println("set logged in is successfully")
+            getLoggInState()
         }
+
     }
 
-
+    fun getLoggInState() {
+        viewModelScope.launch {
+            user.isLoggedIn().onEach {
+                println("---------------------------------------------------------is logged in $it")
+            }.launchIn(viewModelScope)
+        }
+    }
 
 
 }

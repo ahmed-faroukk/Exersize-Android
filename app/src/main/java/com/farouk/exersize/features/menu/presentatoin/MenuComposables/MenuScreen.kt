@@ -6,10 +6,12 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
+import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
@@ -20,10 +22,11 @@ import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import cafe.adriel.voyager.navigator.tab.LocalTabNavigator
 import com.farouk.exersize.R
+import com.farouk.exersize.features.home.presentaion.HomeTab.HomeTab
 import com.farouk.exersize.features.home.presentaion.composables.BellImage
 import com.farouk.exersize.features.home.presentaion.composables.CircleCoachImage
-import com.farouk.exersize.theme.darkYellow
 
 @Composable
 fun MenuScreen(
@@ -33,6 +36,8 @@ onSwitchClick :() -> Unit ,
 onThemeClick :() -> Unit ,
 
 ){
+    val tabNavigator = LocalTabNavigator.current
+
     Column(
         modifier= Modifier
             .fillMaxSize()
@@ -41,21 +46,22 @@ onThemeClick :() -> Unit ,
         Box(
             Modifier
                 .fillMaxWidth()
-                .height(100.dp)
-                .background(darkYellow)
-                .padding(top = 30.dp)
+                .height(180.dp)
+                .background(MaterialTheme.colorScheme.surface)
 
         ){
             Column {
-
                 Row(
                     Modifier
                         .fillMaxWidth()
+                        .fillMaxHeight()
                         .padding(start = 10.dp),
-                    verticalAlignment = Alignment.Bottom,
+                    verticalAlignment = Alignment.CenterVertically,
                     horizontalArrangement = Arrangement.SpaceBetween
                 ){
-                    CircleCoachImage(painterResource(id = R.drawable.man),55)
+                    CircleCoachImage(painterResource(id = R.drawable.backto),10  , initSize = 10f , targetSize = 50f){
+                        tabNavigator.current = HomeTab
+                    }
                     Text(
                         text ="menu",
                         fontSize = 20.sp,

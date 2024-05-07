@@ -30,6 +30,7 @@ class SplashViewModel @Inject constructor(
         viewModelScope.launch {
             delay(3000)
         }.invokeOnCompletion {
+            println("-----------------------from splsh vm is logged in ${userStateIsLoggedIn.value}")
             if (userStateIsLoggedIn.value && doAction.value) {
                 navigateToHome(navigator)
                 doAction.value = false

@@ -141,7 +141,7 @@ fun PackagesUI(
                 ) {
                     Row(Modifier.fillMaxWidth() ) {
                         
-                        CircleCoachImage(rememberAsyncImagePainter(model = coachImg), 120)
+                        CircleCoachImage(rememberAsyncImagePainter(model = coachImg), 120){}
                         Column {
                             Text(
                                 text = "Captain: $coachName",

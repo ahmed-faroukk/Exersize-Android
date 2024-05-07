@@ -51,7 +51,8 @@ class HomeViewModel @Inject constructor(
     }
     fun getAllCoaches() {
 
-        homeUseCases.getAllCoachesUseCase(token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYWJvdmUtZWxrLW9wZW4ubmdyb2stZnJlZS5hcHAvYXBpL3RyYWluZWUvdmVyaWZ5IiwiaWF0IjoxNzEzOTg0ODg4LCJleHAiOjE3MzE5ODQ4ODgsIm5iZiI6MTcxMzk4NDg4OCwianRpIjoiOERTcE5kYlJYRVgxbzN3OCIsInN1YiI6IjIxIiwicHJ2IjoiNzAzYWFjMDNlM2JmYTYxOTYxYzlhYWUzY2IzMWFjMGExMjE4Y2JkMiJ9.8KO-85jTT5iV8IBx9iojyBoqxMvY1lRZp8ZRHFOfB_U").onEach {
+        homeUseCases.getAllCoachesUseCase(token = _token.value).onEach {
+            //eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYWJvdmUtZWxrLW9wZW4ubmdyb2stZnJlZS5hcHAvYXBpL3RyYWluZWUvdmVyaWZ5IiwiaWF0IjoxNzEzOTg0ODg4LCJleHAiOjE3MzE5ODQ4ODgsIm5iZiI6MTcxMzk4NDg4OCwianRpIjoiOERTcE5kYlJYRVgxbzN3OCIsInN1YiI6IjIxIiwicHJ2IjoiNzAzYWFjMDNlM2JmYTYxOTYxYzlhYWUzY2IzMWFjMGExMjE4Y2JkMiJ9.8KO-85jTT5iV8IBx9iojyBoqxMvY1lRZp8ZRHFOfB_U
             when (it) {
                 is Resource.Success -> {
                     _getAllCoaches.value = GetAllCoachesState(data = it.data)
@@ -71,7 +72,7 @@ class HomeViewModel @Inject constructor(
 
     fun getCoach(id : String ) {
 
-        homeUseCases.getCoachUseCase(id = id , token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYWJvdmUtZWxrLW9wZW4ubmdyb2stZnJlZS5hcHAvYXBpL3RyYWluZWUvdmVyaWZ5IiwiaWF0IjoxNzEzOTg0ODg4LCJleHAiOjE3MzE5ODQ4ODgsIm5iZiI6MTcxMzk4NDg4OCwianRpIjoiOERTcE5kYlJYRVgxbzN3OCIsInN1YiI6IjIxIiwicHJ2IjoiNzAzYWFjMDNlM2JmYTYxOTYxYzlhYWUzY2IzMWFjMGExMjE4Y2JkMiJ9.8KO-85jTT5iV8IBx9iojyBoqxMvY1lRZp8ZRHFOfB_U").onEach {
+        homeUseCases.getCoachUseCase(id = id , token =  _token.value).onEach {
             when (it) {
                 is Resource.Success -> {
                     _getCoach.value = GetCoachState(data = it.data)
@@ -91,7 +92,7 @@ class HomeViewModel @Inject constructor(
 
     fun getPackages(coachId : String ) {
 
-        homeUseCases.getPackagesUseCase(id = coachId , token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYWJvdmUtZWxrLW9wZW4ubmdyb2stZnJlZS5hcHAvYXBpL3RyYWluZWUvdmVyaWZ5IiwiaWF0IjoxNzEzOTg0ODg4LCJleHAiOjE3MzE5ODQ4ODgsIm5iZiI6MTcxMzk4NDg4OCwianRpIjoiOERTcE5kYlJYRVgxbzN3OCIsInN1YiI6IjIxIiwicHJ2IjoiNzAzYWFjMDNlM2JmYTYxOTYxYzlhYWUzY2IzMWFjMGExMjE4Y2JkMiJ9.8KO-85jTT5iV8IBx9iojyBoqxMvY1lRZp8ZRHFOfB_U").onEach {
+        homeUseCases.getPackagesUseCase(id = coachId , token =  _token.value).onEach {
             when (it) {
                 is Resource.Success -> {
                     _getPackages.value = GetPackagesState(data = it.data)
@@ -111,7 +112,7 @@ class HomeViewModel @Inject constructor(
 
     fun getCoachPortfolio(coachId : String ) {
 
-        homeUseCases.getPortfolioUseCase(id = coachId , token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYWJvdmUtZWxrLW9wZW4ubmdyb2stZnJlZS5hcHAvYXBpL3RyYWluZWUvdmVyaWZ5IiwiaWF0IjoxNzEzOTg0ODg4LCJleHAiOjE3MzE5ODQ4ODgsIm5iZiI6MTcxMzk4NDg4OCwianRpIjoiOERTcE5kYlJYRVgxbzN3OCIsInN1YiI6IjIxIiwicHJ2IjoiNzAzYWFjMDNlM2JmYTYxOTYxYzlhYWUzY2IzMWFjMGExMjE4Y2JkMiJ9.8KO-85jTT5iV8IBx9iojyBoqxMvY1lRZp8ZRHFOfB_U").onEach {
+        homeUseCases.getPortfolioUseCase(id = coachId , token =  _token.value).onEach {
             when (it) {
                 is Resource.Success -> {
                     _getPortfolio.value = GetPortfolioState(data = it.data)
@@ -131,7 +132,7 @@ class HomeViewModel @Inject constructor(
 
     fun reqPackages(coachId : String, packageId : String ) {
 
-        homeUseCases.reqPackageUseCase(coachId = coachId, packageId = packageId , token = "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpc3MiOiJodHRwOi8vYWJvdmUtZWxrLW9wZW4ubmdyb2stZnJlZS5hcHAvYXBpL3RyYWluZWUvdmVyaWZ5IiwiaWF0IjoxNzEzOTg0ODg4LCJleHAiOjE3MzE5ODQ4ODgsIm5iZiI6MTcxMzk4NDg4OCwianRpIjoiOERTcE5kYlJYRVgxbzN3OCIsInN1YiI6IjIxIiwicHJ2IjoiNzAzYWFjMDNlM2JmYTYxOTYxYzlhYWUzY2IzMWFjMGExMjE4Y2JkMiJ9.8KO-85jTT5iV8IBx9iojyBoqxMvY1lRZp8ZRHFOfB_U").onEach {
+        homeUseCases.reqPackageUseCase(coachId = coachId, packageId = packageId , token =  _token.value).onEach {
             when (it) {
                 is Resource.Success -> {
                     _reqPackages.value = ReqPackagesState(data = it.data)
@@ -165,15 +166,10 @@ class HomeViewModel @Inject constructor(
         viewModelScope.launch {
             userLocalDataSource.isLoggedIn().onEach {
                 println("---------------------------------------------------------is logged in $it")
-
             }.launchIn(viewModelScope)
         }
     }
-    fun logout(){
-        viewModelScope.launch {
-            userLocalDataSource.setLoggedout()
-        }
-    }
+
 
     }
 

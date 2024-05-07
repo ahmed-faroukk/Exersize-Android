@@ -5,6 +5,7 @@ import android.database.Cursor
 import android.net.Uri
 import android.provider.MediaStore
 import android.util.Log
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -12,6 +13,7 @@ import cafe.adriel.voyager.navigator.Navigator
 import com.farouk.exersize.base.navigation.navbar.NavBarContainer
 import com.farouk.exersize.features.inbody.Util.MultiPartUtil
 import com.farouk.exersize.features.inbody.domain.usecases.InBodyUseCase
+import com.farouk.exersize.user.data.local.UserLocalDataSource
 import com.farouk.exersize.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -29,12 +31,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class InBodyViewModel @Inject constructor(
-    private val inBodyUseCase: InBodyUseCase
+    private val inBodyUseCase: InBodyUseCase ,
+    private val userLocalDataSource: UserLocalDataSource
 ) : ViewModel() {
+    private val _token : MutableState<String> = mutableStateOf("")
+    val token = _token
 
     private val _inBodyState = mutableStateOf(UserInBodyState())
     val inBodyState = _inBodyState
 
+    init {
+        getToken()
+    }
     fun sendInBodyData(
         gender: String,
         age: String,
@@ -52,7 +60,8 @@ class InBodyViewModel @Inject constructor(
                 prepareStringPart(weight),
                 prepareStringPart(tall),
                 prepareStringPart(token),
-                null ,
+                //preparePdfPart(context , inBodyFilePath) ,
+                null,
                 imgToMultiPartUtil(context,  imgFilePath)
             ).onEach {
                 when (it) {
@@ -136,5 +145,15 @@ class InBodyViewModel @Inject constructor(
         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
         return MultipartBody.Part.createFormData("img", file.name, requestFile)
     }
+    fun getToken() {
+        viewModelScope.launch {
+            userLocalDataSource.getToken().onEach {token->
+                _token.value = token.toString()
+                println("---------------------------------------------------------token from home vm")
+                println("$token")
+            }.launchIn(viewModelScope)
+        }
+    }
+
 
 }

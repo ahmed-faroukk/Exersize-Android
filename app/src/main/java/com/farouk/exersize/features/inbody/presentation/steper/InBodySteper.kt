@@ -108,6 +108,10 @@ class StepperScreen() : Screen {
                 mutableStateOf(false)
             }
 
+            val reqIsSent = remember {
+                mutableStateOf(false)
+            }
+
 
             val navigator = LocalNavigator.currentOrThrow
             val context = LocalContext.current
@@ -115,8 +119,12 @@ class StepperScreen() : Screen {
             val state = viewModel.inBodyState.value
             when {
 
-                state.data?.status == true -> {
+                state.data?.status == true && !reqIsSent.value  -> {
                     viewModel.navigateToHome(navigator = navigator)
+                    reqIsSent.value = true
+                }
+                state.data?.status == false ->{
+                    currentStep--
                 }
 
                 state.isLoading -> {
@@ -209,14 +217,13 @@ class StepperScreen() : Screen {
                             Log.d("weight : ", weight.value.toString())
                             Log.d("pdf Path : ", selectedPdfUri.value.toString())
                             Log.d("img Path : ", photoUri.value.toString())
-                          //  navigator.replaceAll(SuccessScreen())
                             photoUri.value?.let {
                                 viewModel.sendInBodyData(
                                     gender = userGender.value.toString(),
                                     age = age.value,
                                     weight = weight.value,
                                     tall = tall.value,
-                                    token = "",
+                                    token = viewModel.token.value,
                                     inBodyFilePath = selectedPdfUri.value,
                                     imgFilePath = it,
                                     context = context

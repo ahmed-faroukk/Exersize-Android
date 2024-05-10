@@ -10,16 +10,17 @@ import retrofit2.http.Part
 
 interface InBodyApiInterface {
 
-    @POST(InBodyConstants.INBODY_ENDPOINT)
     @Multipart
+    @POST(InBodyConstants.INBODY_ENDPOINT)
     suspend fun sendInBodyData(
         @Part("gender") gender : RequestBody ,
         @Part("age") age : RequestBody ,
         @Part("weight") weight : RequestBody ,
         @Part("tall") tall : RequestBody ,
         @Part("token") token : RequestBody ,
-        @Part inbody_pdf : MultipartBody.Part ,
+        @Part inbody_pdf : MultipartBody.Part? ,
         @Part img : MultipartBody.Part ,
     ) : InBodyResponse
+
 
 }

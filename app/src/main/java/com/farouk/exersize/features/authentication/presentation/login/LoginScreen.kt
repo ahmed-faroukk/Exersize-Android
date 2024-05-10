@@ -13,8 +13,6 @@ import com.farouk.exersize.features.authentication.presentation.components.Loadi
 import com.farouk.exersize.features.authentication.presentation.login.components.LoginForm
 import com.farouk.exersize.features.authentication.presentation.login.components.ShowLoginErrorDialog
 import com.farouk.exersize.features.authentication.presentation.login.components.ShowLoginInfoDialog
-import com.farouk.exersize.utils.validation.InputWrapper
-import com.farouk.exersize.utils.validation.ValidationType
 
 class LoginScreen : Screen {
     @Composable
@@ -51,7 +49,6 @@ class LoginScreen : Screen {
             }
             else -> {}
         }
-
 
         LoginForm(viewModel = viewModel, navigator = navigator, phone = phone , infoDialog = infoDialog ,errorDialog = errorDialog)
 

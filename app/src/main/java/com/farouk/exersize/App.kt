@@ -16,7 +16,7 @@ class App : Application() {
     override fun onCreate() {
         super.onCreate()
         val channel = NotificationChannel(
-            CHANNEL_ID,
+            "CATReloaded",
             "running_notifications",
             NotificationManager.IMPORTANCE_HIGH
         )
@@ -24,5 +24,7 @@ class App : Application() {
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager
         notificationManager.createNotificationChannel(channel)
     }
+
+
 
 }

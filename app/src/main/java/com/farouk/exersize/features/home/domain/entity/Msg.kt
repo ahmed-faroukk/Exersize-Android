@@ -6,5 +6,7 @@ data class Msg(
     val fname: String,
     val id: Int,
     val lname: String,
-    val personal_img: String
+    val personal_img: String,
+    val trainees_number :  Int ,
+    val rate : Float
 )

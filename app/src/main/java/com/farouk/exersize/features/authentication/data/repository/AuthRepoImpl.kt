@@ -22,5 +22,5 @@ class AuthRepoImpl @Inject constructor(
 
     override suspend fun resendCode(phone: String): ResendCodeResponse = authApiInterface.resendCode(phone)
     override suspend fun verifyCode(verifyCodeModel: VerifyCodeModel): VerifyCodeResponse =
-        authApiInterface.verifyCode(verifyCodeModel)
+        authApiInterface.verifyCode(verifyCodeModel.phone , verifyCodeModel.code)
 }

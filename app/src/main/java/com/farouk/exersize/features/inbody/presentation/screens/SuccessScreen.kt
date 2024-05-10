@@ -5,7 +5,6 @@ import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.runtime.Composable
@@ -52,6 +51,7 @@ class SuccessScreen : Screen {
 @Composable
 fun GifImage(
     modifier: Modifier = Modifier,
+    gif: Int = R.drawable.done_gif
 ) {
     val context = LocalContext.current
     val imageLoader = ImageLoader.Builder(context)
@@ -65,14 +65,14 @@ fun GifImage(
         .build()
     Column(
         modifier
-            .fillMaxSize()
+            .fillMaxWidth()
             .background(MaterialTheme.colorScheme.primary),
         verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally
     ) {
         Image(
             painter = rememberAsyncImagePainter(
-                ImageRequest.Builder(context).data(data = R.drawable.done_gif).apply(block = {
+                ImageRequest.Builder(context).data(data = gif).apply(block = {
                     size(700)
                 }).build(), imageLoader = imageLoader
             ),

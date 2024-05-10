@@ -4,10 +4,9 @@ import android.annotation.SuppressLint
 import androidx.compose.animation.core.tween
 import androidx.compose.foundation.layout.padding
 import androidx.compose.runtime.Composable
-import androidx.compose.ui.Modifier
 import androidx.compose.ui.unit.dp
-import androidx.hilt.navigation.compose.hiltViewModel
 import cafe.adriel.voyager.core.screen.Screen
+import cafe.adriel.voyager.hilt.getViewModel
 import cafe.adriel.voyager.navigator.LocalNavigator
 import cafe.adriel.voyager.navigator.currentOrThrow
 import com.farouk.exersize.R
@@ -17,13 +16,14 @@ import com.farouk.exersize.features.splash.presentaiton.components.ShowLogo
 object SplashScreen : Screen {
     @Composable
     override fun Content() {
-        SplashScreen()
+        val viewModel: SplashViewModel = getViewModel()
+        SplashScreen(viewModel)
     }
 
     @SuppressLint("SuspiciousIndentation")
     @Composable
     fun SplashScreen(
-         viewModel: SplashViewModel = hiltViewModel()
+         viewModel: SplashViewModel
     ) {
         val navigator = LocalNavigator.currentOrThrow
         viewModel.navigateTo(navigator)

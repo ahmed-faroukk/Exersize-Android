@@ -35,7 +35,6 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
-import cafe.adriel.voyager.navigator.Navigator
 import com.farouk.exersize.R
 import com.farouk.exersize.features.authentication.common.Constants
 import com.farouk.exersize.features.authentication.data.Model.codeVerfication.VerifyCodeModel
@@ -53,7 +52,7 @@ fun VerifyCodeUI(
     errorDialog: MutableState<Boolean>,
     viewModel: AuthViewModel,
     phone: String,
-    navigator: Navigator
+    reqIsSent : MutableState<Boolean>
 ) {
     val vibrator = LocalContext.current.getSystemService(Vibrator::class.java)
     val isEmptyReq = remember { mutableStateOf(false) }
@@ -76,10 +75,14 @@ fun VerifyCodeUI(
     }
 
     Column(
-        modifier = Modifier.fillMaxSize().background(MaterialTheme.colorScheme.primary)
+        modifier = Modifier
+            .fillMaxSize()
+            .background(MaterialTheme.colorScheme.primary)
     ) {
         AnimatedVisibility(
-            modifier = Modifier.fillMaxWidth().weight(3f),
+            modifier = Modifier
+                .fillMaxWidth()
+                .weight(3f),
             visible = isVisible,
             enter = scaleIn(tween(700)) + fadeIn(tween(1000))
         ) {
@@ -91,7 +94,8 @@ fun VerifyCodeUI(
                 OTPColor = OTPColor,
                 viewModel = viewModel,
                 phone = phone,
-                errorDialog = errorDialog
+                errorDialog = errorDialog,
+                reqIsSent =reqIsSent
             )
         }
     }
@@ -106,13 +110,18 @@ private fun VerifyCodeContent(
     OTPColor: MutableState<Color>,
     viewModel: AuthViewModel,
     phone: String,
-    errorDialog: MutableState<Boolean>
+    errorDialog: MutableState<Boolean>,
+    reqIsSent : MutableState<Boolean>
 ) {
+
     Column(
-        modifier = Modifier.fillMaxSize().background(
-            MaterialTheme.colorScheme.primary,
-            shape = RoundedCornerShape(bottomStart = 100.dp, bottomEnd = 100.dp)
-        ).padding(20.dp)
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                MaterialTheme.colorScheme.primary,
+                shape = RoundedCornerShape(bottomStart = 100.dp, bottomEnd = 100.dp)
+            )
+            .padding(20.dp)
     ) {
         Spacer(modifier = Modifier.height(30.dp))
 
@@ -137,7 +146,9 @@ private fun VerifyCodeContent(
         Spacer(modifier = Modifier.height(20.dp))
 
         Box(
-            modifier = Modifier.fillMaxWidth().offset(x = if (isShaking) translationXState.dp else 0.dp),
+            modifier = Modifier
+                .fillMaxWidth()
+                .offset(x = if (isShaking) translationXState.dp else 0.dp),
             contentAlignment = Alignment.Center
         ) {
             PinView(
@@ -157,8 +168,11 @@ private fun VerifyCodeContent(
                     OTPColor.value = Color.Red
                     onPinValueChange("")
                 }else{
+                    println(phone)
+                    println(pinValue)
                     viewModel.verifyCode(VerifyCodeModel(phone, pinValue))
                     errorDialog.value = true
+                    reqIsSent.value = true
                 }
 
             },

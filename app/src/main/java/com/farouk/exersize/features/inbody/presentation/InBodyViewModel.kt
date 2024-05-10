@@ -4,13 +4,16 @@ import android.content.Context
 import android.database.Cursor
 import android.net.Uri
 import android.provider.MediaStore
+import android.util.Log
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import cafe.adriel.voyager.navigator.Navigator
-import com.farouk.exersize.features.home.presentaion.HomeScreen
+import com.farouk.exersize.base.navigation.navbar.NavBarContainer
 import com.farouk.exersize.features.inbody.Util.MultiPartUtil
 import com.farouk.exersize.features.inbody.domain.usecases.InBodyUseCase
+import com.farouk.exersize.user.data.local.UserLocalDataSource
 import com.farouk.exersize.utils.Resource
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.delay
@@ -28,12 +31,18 @@ import javax.inject.Inject
 
 @HiltViewModel
 class InBodyViewModel @Inject constructor(
-    private val inBodyUseCase: InBodyUseCase
+    private val inBodyUseCase: InBodyUseCase ,
+    private val userLocalDataSource: UserLocalDataSource
 ) : ViewModel() {
+    private val _token : MutableState<String> = mutableStateOf("")
+    val token = _token
 
     private val _inBodyState = mutableStateOf(UserInBodyState())
     val inBodyState = _inBodyState
 
+    init {
+        getToken()
+    }
     fun sendInBodyData(
         gender: String,
         age: String,
@@ -41,17 +50,19 @@ class InBodyViewModel @Inject constructor(
         tall: String,
         token: String,
         inBodyFilePath: Uri,
-        imgFilePath: String,
+        imgFilePath: Uri,
         context: Context
     ) {
+
             inBodyUseCase.invoke(
                 prepareStringPart(gender),
                 prepareStringPart(age),
                 prepareStringPart(weight),
                 prepareStringPart(tall),
                 prepareStringPart(token),
-                pdfToMultiPartUtil(context , inBodyFilePath),
-                prepareImagePart( imgFilePath)
+                //preparePdfPart(context , inBodyFilePath) ,
+                null,
+                imgToMultiPartUtil(context,  imgFilePath)
             ).onEach {
                 when (it) {
                     is Resource.Success -> {
@@ -70,39 +81,29 @@ class InBodyViewModel @Inject constructor(
             }.launchIn(viewModelScope)
         }
 
-    fun imgToMultiPartUtil(context: Context , url : Uri) : MultipartBody.Part {
 
-        val multiPartPhoto =
-            MultiPartUtil.fileToMultiPart(
-                context , url,
-                "img"
-            )
-        return multiPartPhoto
+    private fun imgToMultiPartUtil(context: Context, url: Uri): MultipartBody.Part {
 
-    }
-    fun pdfToMultiPartUtil(context: Context , url : Uri) : MultipartBody.Part {
-
-        val multiPartPhoto =
-            MultiPartUtil.fileToMultiPart(
-                context , url,
-                "inbody_pdf"
-            )
-        return multiPartPhoto
+        return MultiPartUtil.fileToMultiPart(
+            context, url,
+            "img"
+        )
 
     }
 
-    private fun preparePdfPart(context: Context,filePath: Uri): MultipartBody.Part {
-        val realPath  = getRealPathFromURI(context = context , filePath)
-        val file = realPath?.let { File(it) }
-        val requestFile = file?.asRequestBody("application/pdf".toMediaTypeOrNull())
-        return requestFile?.let { MultipartBody.Part.createFormData("inbody_pdf", file?.name, it) } ?: MultipartBody.Part.createFormData("","")
+    private fun pdfToMultiPartUtil(context: Context, url: Uri): MultipartBody.Part? {
+        Log.d("Debug", "URI: $url")
+        if (url == Uri.EMPTY)
+            return null
+
+        return MultiPartUtil.fileToMultiPart(
+            context, url,
+            "inbody_pdf"
+        )
+
     }
 
-    private fun prepareImagePart(filePath: String): MultipartBody.Part {
-        val file = File(filePath)
-        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
-        return MultipartBody.Part.createFormData("img", file.name, requestFile)
-    }
+
     private fun getRealPathFromURI(context: Context,contentURI: Uri): String? {
         val result: String?
         val cursor: Cursor? = context.contentResolver.query(contentURI, null, null, null, null)
@@ -125,12 +126,33 @@ class InBodyViewModel @Inject constructor(
         viewModelScope.launch {
             delay(3000)
         }.invokeOnCompletion {
-            navigator.replaceAll(HomeScreen())
+            navigator.replaceAll(NavBarContainer())
         }
     }
 
     fun navigateToSuccessScreen(navigator: Navigator) {
 
+    }
+    private fun preparePdfPart(context: Context,filePath: Uri): MultipartBody.Part {
+        val realPath  = getRealPathFromURI(context = context , filePath)
+        val file = realPath?.let { File(it) }
+        val requestFile = file?.asRequestBody("application/pdf".toMediaTypeOrNull())
+        return requestFile?.let { MultipartBody.Part.createFormData("inbody_pdf", file?.name, it) } ?: MultipartBody.Part.createFormData("","")
+    }
+
+    private fun prepareImagePart(filePath: String): MultipartBody.Part {
+        val file = File(filePath)
+        val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
+        return MultipartBody.Part.createFormData("img", file.name, requestFile)
+    }
+    fun getToken() {
+        viewModelScope.launch {
+            userLocalDataSource.getToken().onEach {token->
+                _token.value = token.toString()
+                println("---------------------------------------------------------token from home vm")
+                println("$token")
+            }.launchIn(viewModelScope)
+        }
     }
 
 

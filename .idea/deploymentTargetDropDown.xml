@@ -2,23 +2,36 @@
 <project version="4">
   <component name="deploymentTargetDropDown">
     <value>
+      <entry key="ChatUI">
+        <State />
+      </entry>
       <entry key="DefaultPreview">
         <State />
       </entry>
-      <entry key="HomPreview">
-        <State />
-      </entry>
-      <entry key="HomePreview">
-        <State />
-      </entry>
       <entry key="HomePreview (1)">
+        <State />
+      </entry>
+      <entry key="Massges">
         <State />
       </entry>
       <entry key="VerifyPreview">
         <State />
       </entry>
       <entry key="app">
-        <State />
+        <State>
+          <runningDeviceTargetSelectedWithDropDown>
+            <Target>
+              <type value="RUNNING_DEVICE_TARGET" />
+              <deviceKey>
+                <Key>
+                  <type value="SERIAL_NUMBER" />
+                  <value value="adb-EUJB7PLVBIHANBFU-qC5J0e._adb-tls-connect._tcp" />
+                </Key>
+              </deviceKey>
+            </Target>
+          </runningDeviceTargetSelectedWithDropDown>
+          <timeTargetWasSelectedWithDropDown value="2024-05-10T16:47:46.247336900Z" />
+        </State>
       </entry>
     </value>
   </component>

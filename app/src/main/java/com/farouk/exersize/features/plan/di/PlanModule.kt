@@ -1,5 +1,6 @@
 package com.farouk.exersize.features.plan.di
 
+import com.farouk.exersize.base.Constants.BASE_URL
 import com.farouk.exersize.features.plan.data.remote.PlanApiInterface
 import com.farouk.exersize.features.plan.data.repoImpl.PlanRepoImpl
 import com.farouk.exersize.features.plan.domain.repo.PlanRepo
@@ -31,7 +32,7 @@ object PlanModule {
                 .addInterceptor(logging).build()
 
             Retrofit.Builder()
-                .baseUrl(PlanApiInterface.BASE_URL)
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()

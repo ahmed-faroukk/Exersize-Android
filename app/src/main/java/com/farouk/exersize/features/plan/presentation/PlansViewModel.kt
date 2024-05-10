@@ -24,6 +24,10 @@ class PlansViewModel @Inject constructor(
 
     private val _token : MutableState<String> = mutableStateOf("")
     val token = _token
+    init {
+        getToken()
+        getTraineePlans()
+    }
 
     fun getTraineePlans()  {
         useCase.invoke(_token.value).onEach {

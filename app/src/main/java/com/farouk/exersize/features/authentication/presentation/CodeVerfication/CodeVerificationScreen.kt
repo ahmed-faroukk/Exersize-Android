@@ -1,4 +1,4 @@
-package com.farouk.exersize.features.authentication.presentation.CodeVerfication
+ package com.farouk.exersize.features.authentication.presentation.CodeVerfication
 
 import android.os.Build
 import android.os.VibrationEffect
@@ -66,8 +66,11 @@ fun OTPLogin(
           /*  if (state.data.msg.gender == null)
                 navigator.push(StepperScreen())
             else */
+            viewModel.saveUserId(state.data.msg.id.toString())
+            viewModel.saveChatId(state.data.msg.chat_id.toString())
             viewModel.navigateToHome(navigator)
             reqIsSent.value = false
+
             // navigator.push(StepperScreen())
             OTPColor.value = Color.Green
 

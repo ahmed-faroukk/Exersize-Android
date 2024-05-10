@@ -1,5 +1,6 @@
 package com.farouk.exersize.features.home.di
 
+import com.farouk.exersize.base.Constants.BASE_URL
 import com.farouk.exersize.features.home.data.remote.HomeApiInterface
 import com.farouk.exersize.features.home.data.repo.HomeRepoImpl
 import com.farouk.exersize.features.home.domain.repo.HomeRepo
@@ -35,7 +36,7 @@ object HomeModule {
                 .addInterceptor(logging).build()
 
             Retrofit.Builder()
-                .baseUrl(HomeApiInterface.BASE_URL)
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()

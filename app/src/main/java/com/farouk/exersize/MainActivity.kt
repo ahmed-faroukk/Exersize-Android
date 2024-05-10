@@ -9,6 +9,7 @@ import android.os.Bundle
 import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.RequiresApi
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
@@ -21,6 +22,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Modifier
 import androidx.core.app.NotificationCompat
+import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.lifecycleScope
 import cafe.adriel.voyager.navigator.Navigator
 import cafe.adriel.voyager.transitions.SlideTransition
@@ -28,6 +30,7 @@ import com.farouk.exersize.base.Connectivity.ConnectivityObserver
 import com.farouk.exersize.base.Connectivity.ConnectivityObserver.Status
 import com.farouk.exersize.base.Connectivity.NetworkConnectivityObserver
 import com.farouk.exersize.base.composables.InfoDialog
+import com.farouk.exersize.features.chat.presentatoin.ChatViewModel
 import com.farouk.exersize.features.splash.presentaiton.SplashScreen
 import com.farouk.exersize.service.ExersizeService
 import com.farouk.exersize.theme.ExersizeTheme
@@ -48,10 +51,11 @@ class MainActivity : ComponentActivity() {
 
     private lateinit var connectivityObserver: ConnectivityObserver
     private val foregroundService = ExersizeService()
-
+    @RequiresApi(Build.VERSION_CODES.O)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setupPusher()
+
         connectivityObserver = NetworkConnectivityObserver(applicationContext)
         setContent {
             val infoDialog = remember { mutableStateOf(true) }
@@ -65,6 +69,11 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.surface
                 ) {
+                     val chatViewModel  : ChatViewModel = hiltViewModel()
+
+                  /*  if (chatViewModel.chatId.value.toString() != "" ){
+                        setupPusherChatting(chatViewModel.chatId.value , chatViewModel)
+                    }*/
 
                     if (status.value != Status.Available && infoDialog.value) {
                         InfoDialog(
@@ -145,8 +154,8 @@ class MainActivity : ComponentActivity() {
                 )
             }
         }, ConnectionState.ALL)
-        val channel = pusher.subscribe("notify")
-        channel.bind("6notify") { event ->
+        val channel = pusher.subscribe("21notify")
+        channel.bind("21notify") { event ->
             Log.i("Pusher", "Received event with data: $event")
             val eventData = JSONObject(event.data)
             Log.i("Pusher", "Received event with data: $eventData")
@@ -156,6 +165,47 @@ class MainActivity : ComponentActivity() {
             pushNotification(title , msg )
         }
     }
+
+   /* @RequiresApi(Build.VERSION_CODES.O)
+    fun setupPusherChatting(chatId : String, viewModel: ChatViewModel) {
+        val options = PusherOptions()
+        options.setCluster("eu");
+        val pusher = Pusher("f2ab4244dfa2cd3140ce", options)
+        pusher.connect(object : ConnectionEventListener {
+            override fun onConnectionStateChange(
+                change:
+                ConnectionStateChange,
+            ) {
+                Log.i(
+                    "Pusher",
+                    "State changed from${change.previousState} to ${change.currentState}"
+                )
+            }
+
+            override fun onError(
+                message: String,
+                code: String,
+                e: Exception,
+            ) {
+                Log.i(
+                    "Pusher",
+                    "There was a problem connecting! code($code), message ($message), exception($e)"
+                )
+            }
+        }, ConnectionState.ALL)
+        val channel = pusher.subscribe("${chatId}Chatting")
+        channel.bind("${chatId}send") { event ->
+            Log.i("Pusher", "Received event with data: $event")
+            val eventData = JSONObject(event.data)
+            Log.i("Pusher", "Received event with data: $eventData")
+            // Accessing data by key
+            val sender = eventData.getString("sender")
+            val msg = eventData.getString("message")
+            viewModel.traineeChat.add(MsgX(msg , Sender.COACH.toString().toLowerCase() , LocalDateTime.now().toString()))
+        }
+    }
+
+*/
     private fun pushNotification(title: String, msg: String) {
         val notificationManager: NotificationManager =
             getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager

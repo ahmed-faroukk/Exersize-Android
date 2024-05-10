@@ -1,6 +1,6 @@
 package com.farouk.exersize.features.authentication.di
 
-import com.farouk.exersize.features.authentication.common.Constants
+import com.farouk.exersize.base.Constants.BASE_URL
 import com.farouk.exersize.features.authentication.data.remote.AuthApiInterface
 import com.farouk.exersize.features.authentication.data.repository.AuthRepoImpl
 import com.farouk.exersize.features.authentication.domain.repository.AuthRepo
@@ -37,7 +37,7 @@ object AuthModule {
                 .addInterceptor(logging).build()
 
             Retrofit.Builder()
-                .baseUrl(Constants.BASE_URL)
+                .baseUrl(BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .client(client)
                 .build()

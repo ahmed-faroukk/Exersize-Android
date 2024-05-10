@@ -83,14 +83,17 @@ class AuthViewModel @Inject constructor(
 
     fun verifyCode(verifyCodeModel: VerifyCodeModel) {
 
-        authUseCase.verifyCodeUseCase(verifyCodeModel).onEach {
-            when (it) {
+        authUseCase.verifyCodeUseCase(verifyCodeModel).onEach {data->
+            when (data) {
                 is Resource.Success -> {
-                    setloggin()
-                    _codeVerifyState.value = VerifyCodeState(data = it.data)
-                    it.data?.msg?.token?.let { it1 -> saveToken(it1) }
-                    println("--------------------------------------------------------------------- token from verify vm")
-                    println("${it.data?.msg?.token}")
+                    viewModelScope.launch {
+                        data.data?.msg?.chat_id?.let { it1 -> user.saveChatUserId(it1) }
+                        data.data?.msg?.id?.let { it1 -> user.saveUserId(it1.toString()) }
+                        data.data?.msg?.token?.let { it1 -> user.saveToken(it1) }
+                    }.invokeOnCompletion {
+                        setloggin()
+                        _codeVerifyState.value = VerifyCodeState(data = data.data )
+                    }
                 }
 
                 is Resource.Loading -> {
@@ -99,7 +102,7 @@ class AuthViewModel @Inject constructor(
 
                 is Resource.Error -> {
                     _codeVerifyState.value =
-                        VerifyCodeState(error = it.message ?: "error not found")
+                        VerifyCodeState(error = data.message ?: "error not found")
                 }
             }
         }.launchIn(viewModelScope)
@@ -136,11 +139,24 @@ class AuthViewModel @Inject constructor(
 
     }
 
-    fun saveToken(token: String) {
+    fun userData(token: String) {
         viewModelScope.launch {
             user.saveToken(token)
         }
     }
+
+    fun saveUserId( userId :String) {
+        viewModelScope.launch {
+            user.saveUserId(userId)
+        }
+    }
+    fun saveChatId(chatId : String) {
+        viewModelScope.launch {
+            user.saveChatUserId(chatId)
+        }
+    }
+
+
 
     private fun setloggin() {
 

@@ -10,6 +10,6 @@ class PlanRepoImpl @Inject constructor(
     private val apiInterface: PlanApiInterface,
 
     ) : PlanRepo {
-    override fun getTraineePlan(token: String): GetPlanResponse = apiInterface.getTraineePlan(token)
+    override suspend fun getTraineePlan(token: String): GetPlanResponse = apiInterface.getTraineePlan(token)
 
 }

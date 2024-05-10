@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import cafe.adriel.voyager.core.screen.Screen
 import cafe.adriel.voyager.hilt.getViewModel
 import com.farouk.exersize.LocalTopNavigator
+import com.farouk.exersize.base.Constants.BASE_URL
 import com.farouk.exersize.features.authentication.presentation.components.AFLoading
 import com.farouk.exersize.features.authentication.presentation.components.ErrorDialog
-import com.farouk.exersize.features.home.data.remote.HomeApiInterface
 import com.farouk.exersize.features.home.presentaion.HomeViewModel
 import com.farouk.exersize.features.home.presentaion.Packages.PackagesScreen
 
@@ -81,7 +81,7 @@ class CoachDetails(private val id : String , private val rate : Float) : Screen 
                     PackagesScreen(
                         id,
                         "${it.msg.fname} ${it.msg.lname}",
-                        "${HomeApiInterface.BASE_URL}${it.msg.personal_img}",
+                        "${BASE_URL}${it.msg.personal_img}",
                         it.msg.exp.toString() ,
                         it.msg.trainees_number.toString(),
                         rate

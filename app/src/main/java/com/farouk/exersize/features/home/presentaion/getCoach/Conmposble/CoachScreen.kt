@@ -40,8 +40,8 @@ import coil.compose.AsyncImagePainter
 import coil.compose.rememberAsyncImagePainter
 import coil.request.ImageRequest
 import com.farouk.exersize.LocalTopNavigator
+import com.farouk.exersize.base.Constants.BASE_URL
 import com.farouk.exersize.features.authentication.presentation.components.AFLoading
-import com.farouk.exersize.features.home.data.remote.HomeApiInterface
 import com.farouk.exersize.features.home.domain.entity.CoachByIdResponse
 import com.farouk.exersize.theme.blue1
 import com.farouk.exersize.theme.darkYellow
@@ -191,7 +191,7 @@ fun CoachInfo(rating: Float, name: String, numOfClints: String, img: String) {
         ) {
             val painter = rememberAsyncImagePainter(
                 model = ImageRequest.Builder(LocalContext.current)
-                    .data(HomeApiInterface.BASE_URL + img)
+                    .data(BASE_URL + img)
                     .size(coil.size.Size.ORIGINAL) // Set the target size to load the image at.
                     .build()
             )
@@ -272,8 +272,8 @@ fun LazyListWithHomeItems(coach: CoachByIdResponse) {
     ) { index ->
         val item = coach.msg.portfolio[index]
         CardOfPortfolio(
-            beforeImge = rememberAsyncImagePainter(HomeApiInterface.BASE_URL + item.img_before),
-            afterImage = rememberAsyncImagePainter(HomeApiInterface.BASE_URL + item.img_after),
+            beforeImge = rememberAsyncImagePainter(BASE_URL + item.img_before),
+            afterImage = rememberAsyncImagePainter(BASE_URL + item.img_after),
             comment = item.description
         )
     }

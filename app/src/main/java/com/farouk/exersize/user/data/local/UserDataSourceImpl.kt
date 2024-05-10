@@ -15,6 +15,8 @@ class UserDataSourceImpl(
     private val context: Context,
 ) : UserLocalDataSource {
     companion object {
+        val USER_ID = stringPreferencesKey("user_Id")
+        val CHAT_ID = stringPreferencesKey("chat_Id")
         val LOGGED_IN_KEY = booleanPreferencesKey("is_logged_in")
         val USER_KEY = stringPreferencesKey("user")
         val USER_SETTINGS = "user_settings"
@@ -61,6 +63,34 @@ class UserDataSourceImpl(
         return context.dataStore.data.map { preferences ->
             val userDataJsonString = preferences[USER_TOKEN]
             preferences[USER_TOKEN]
+        }
+    }
+
+    override suspend fun saveUserId(userId: String) {
+        context.dataStore.edit { preferences ->
+            preferences[USER_ID] = userId  // Convert UserDataModel to String
+        }
+        Log.d("data saved ", userId)
+    }
+
+    override suspend fun getUserId(): Flow<String?> {
+        return context.dataStore.data.map { preferences ->
+            val userDataJsonString = preferences[USER_ID]
+            preferences[USER_ID]
+        }
+    }
+
+    override suspend fun saveChatUserId(chatId: String) {
+        context.dataStore.edit { preferences ->
+            preferences[CHAT_ID] = chatId  // Convert UserDataModel to String
+        }
+        Log.d("data saved ", chatId)
+    }
+
+    override suspend fun getChatId(): Flow<String?> {
+        return context.dataStore.data.map { preferences ->
+            val userDataJsonString = preferences[CHAT_ID]
+            preferences[CHAT_ID]
         }
     }
 

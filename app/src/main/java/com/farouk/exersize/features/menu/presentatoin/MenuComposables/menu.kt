@@ -42,7 +42,8 @@ fun MenuSettings(
             Image(
                 modifier = Modifier.size(40.dp).padding(start =10.dp ,bottom = 2.dp),
                 painter = painter
-                , contentDescription =null)
+                , contentDescription =null
+            )
             Text(
                 text =text,
                 fontSize = 25.sp,

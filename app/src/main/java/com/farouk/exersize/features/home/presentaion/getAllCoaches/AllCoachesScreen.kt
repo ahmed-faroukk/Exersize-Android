@@ -43,9 +43,9 @@ import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
 import com.farouk.exersize.LocalTopNavigator
 import com.farouk.exersize.R
+import com.farouk.exersize.base.Constants.BASE_URL
 import com.farouk.exersize.features.authentication.presentation.components.AFLoading
 import com.farouk.exersize.features.authentication.presentation.components.ErrorDialog
-import com.farouk.exersize.features.home.data.remote.HomeApiInterface
 import com.farouk.exersize.features.home.presentaion.HomeViewModel
 import com.farouk.exersize.features.home.presentaion.composables.BellImage
 import com.farouk.exersize.features.home.presentaion.composables.CoachCard
@@ -140,7 +140,7 @@ fun HomeUI(
                         CoachCard(
                             clintNum = coach.trainees_number.toString(),
                             name = "${coach.fname} ${coach.lname}",
-                            img = HomeApiInterface.BASE_URL + coach.personal_img ,
+                            img = BASE_URL + coach.personal_img ,
                             coach.rate ,
                             modifier = Modifier.animateItemPlacement()
                         ) {

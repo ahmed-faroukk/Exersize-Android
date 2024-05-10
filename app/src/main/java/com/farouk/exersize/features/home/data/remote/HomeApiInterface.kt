@@ -11,7 +11,6 @@ import retrofit2.http.POST
 
 interface HomeApiInterface {
 companion object{
-    const val BASE_URL = "https://above-elk-open.ngrok-free.app/"
     const val GET_ALL_COACHES_ENDPOINT = "api/trainee/coaches"
     const val GET_COACH_ENDPOINT = "api/trainee/coach"
     const val GET_PACKAGES_ENDPOINT = "api/package/show"

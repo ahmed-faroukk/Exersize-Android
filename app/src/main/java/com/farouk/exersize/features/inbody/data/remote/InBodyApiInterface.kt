@@ -22,4 +22,5 @@ interface InBodyApiInterface {
         @Part img : MultipartBody.Part ,
     ) : InBodyResponse
 
+
 }

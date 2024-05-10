@@ -7,12 +7,11 @@ import retrofit2.http.POST
 
 interface PlanApiInterface {
     companion object {
-            const val BASE_URL = "https://above-elk-open.ngrok-free.app/"
             const val GET_USER_PLAN = "api/plan/every"
     }
 
     @POST(GET_USER_PLAN)
     @FormUrlEncoded
-    fun getTraineePlan(@Field("token") token : String) : GetPlanResponse
+    suspend fun getTraineePlan(@Field("token") token : String) : GetPlanResponse
 
 }

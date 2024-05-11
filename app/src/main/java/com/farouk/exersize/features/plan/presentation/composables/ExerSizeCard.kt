@@ -72,7 +72,7 @@ fun ExerSizeCard(
             Box (
                 Modifier.padding(top=30.dp)
             ){
-                GifImage(BASE_URL+exersize.exercise,visible = true)
+                GifImage(BASE_URL+"api/img/"+exersize.exercise,visible = true)
 
             }
                 Column(
@@ -87,7 +87,7 @@ fun ExerSizeCard(
                         modifier = Modifier
                             .wrapContentWidth()
                         ,
-                        text =exersize.exercise,
+                        text =exersize.name,
                         fontSize = 20.sp,
                         textAlign = TextAlign.Center,
                         color= blue2
@@ -168,10 +168,9 @@ fun GifImage(
             ),
             contentDescription = null,
             modifier = Modifier
-                .size(100.dp)
-                .clip(RoundedCornerShape(30.dp))
-                .background(Color.Gray)
-                .padding(top = 10.dp)
+                .size(150.dp)
+                .clip(RoundedCornerShape(5.dp))
+                .background(blue2)
         )
     }
 }

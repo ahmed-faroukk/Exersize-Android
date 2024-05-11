@@ -42,7 +42,6 @@ class SuccessScreen : Screen {
 
         val navigator = LocalNavigator.currentOrThrow
         GifImage()
-        viewModel.navigateToHome(navigator)
     }
 
 

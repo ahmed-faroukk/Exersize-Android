@@ -15,7 +15,7 @@ class ChatRepoImpl @Inject constructor(
         token: String,
     ): SendMsgResponse =apiInterface.sendMsg(chat_id,message,token)
 
-    override suspend fun getChatHistory(chat_id: String, token: String): ShowChatResponse = apiInterface.getChatHistory(chat_id ,token)
+    override suspend fun getChatHistory( token: String): ShowChatResponse = apiInterface.getChatHistory(token)
 
 
 }

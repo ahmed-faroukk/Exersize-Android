@@ -226,9 +226,12 @@ class StepperScreen() : Screen {
                                     token = viewModel.token.value,
                                     inBodyFilePath = selectedPdfUri.value,
                                     imgFilePath = it,
-                                    context = context
+                                    context = context,
+                                    navigator
                                 )
                             }
+                            currentStep--
+
                         }
                     },
                     enabled = currentStep <= numberStep,

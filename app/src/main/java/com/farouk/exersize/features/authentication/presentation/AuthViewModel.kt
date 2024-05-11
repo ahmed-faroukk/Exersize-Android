@@ -1,5 +1,6 @@
 package com.farouk.exersize.features.authentication.presentation
 
+import androidx.compose.runtime.MutableState
 import androidx.compose.runtime.mutableStateOf
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
@@ -39,6 +40,15 @@ class AuthViewModel @Inject constructor(
 
     private val _resendCodeState = mutableStateOf(ReSendCodeState())
     val resendCodeState = _resendCodeState
+
+    private val _token: MutableState<String> = mutableStateOf("")
+    val token = _token
+
+    private val _chatId: MutableState<String> = mutableStateOf("")
+    val chatId = _chatId
+
+    private val _userId: MutableState<String> = mutableStateOf("")
+    val userId = _userId
 
 
     fun createNewAccount(userSignupModel: UserSignupModel) {
@@ -168,6 +178,40 @@ class AuthViewModel @Inject constructor(
         }
 
     }
+
+    fun getUserData() {
+        viewModelScope.launch {
+            user.getUserId().onEach { userId ->
+                _userId.value = userId.toString()
+                println("---------------------------------------------------------userid from chat vm")
+                println("$userId")
+            }.launchIn(viewModelScope)
+
+        }
+
+        viewModelScope.launch {
+            user.getToken().onEach { token ->
+                _token.value = token.toString()
+                println("---------------------------------------------------------token from chat vm")
+                println("$token")
+            }.launchIn(viewModelScope)
+        }
+
+
+        viewModelScope.launch {
+            user.getChatId().onEach { chatId ->
+                _chatId.value = chatId.toString()
+                println("---------------------------------------------------------chat id from chat vm")
+                println("$chatId")
+            }.launchIn(viewModelScope)
+        }
+    }
+
+   /* fun addChatHistoryToCHatUi(){
+        _getChatState.value.data?.let {
+            traineeChat.addAll(it.msg)
+        }
+    }*/
 
     fun getLoggInState() {
         viewModelScope.launch {

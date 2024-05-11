@@ -12,7 +12,6 @@ interface ChatRepo {
     ) : SendMsgResponse
 
     suspend fun getChatHistory (
-        chat_id: String,
         token: String,
     ) : ShowChatResponse
 

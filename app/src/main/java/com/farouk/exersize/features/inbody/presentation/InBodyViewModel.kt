@@ -40,6 +40,8 @@ class InBodyViewModel @Inject constructor(
     private val _inBodyState = mutableStateOf(UserInBodyState())
     val inBodyState = _inBodyState
 
+    val navNow = mutableStateOf(false)
+
     init {
         getToken()
     }
@@ -51,7 +53,8 @@ class InBodyViewModel @Inject constructor(
         token: String,
         inBodyFilePath: Uri,
         imgFilePath: Uri,
-        context: Context
+        context: Context,
+        navigator: Navigator
     ) {
 
             inBodyUseCase.invoke(
@@ -122,9 +125,10 @@ class InBodyViewModel @Inject constructor(
         return value.toRequestBody("text/plain".toMediaTypeOrNull())
     }
 
+
     fun navigateToHome(navigator: Navigator) {
         viewModelScope.launch {
-            delay(3000)
+            delay(5000)
         }.invokeOnCompletion {
             navigator.replaceAll(NavBarContainer())
         }
@@ -145,6 +149,7 @@ class InBodyViewModel @Inject constructor(
         val requestFile = file.asRequestBody("image/*".toMediaTypeOrNull())
         return MultipartBody.Part.createFormData("img", file.name, requestFile)
     }
+
     fun getToken() {
         viewModelScope.launch {
             userLocalDataSource.getToken().onEach {token->

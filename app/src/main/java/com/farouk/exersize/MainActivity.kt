@@ -76,7 +76,7 @@ class MainActivity : ComponentActivity() {
                     color = MaterialTheme.colorScheme.surface
                 ) {
                     val viewModel: AuthViewModel = hiltViewModel()
-                        setupPusher("52")
+                        setupPusher("62")
 
                     /*  if (chatViewModel.chatId.value.toString() != "" ){
                           setupPusherChatting(chatViewModel.chatId.value , chatViewModel)

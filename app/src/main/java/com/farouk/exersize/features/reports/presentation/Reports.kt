@@ -1,5 +1,6 @@
 package com.farouk.exersize.features.reports.presentation
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
@@ -12,6 +13,8 @@ import androidx.compose.ui.res.painterResource
 import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import com.farouk.exersize.R
+import com.farouk.exersize.theme.blue1
+import com.farouk.exersize.theme.darkYellow
 
 object ReportsTab : Tab {
 
@@ -32,8 +35,8 @@ object ReportsTab : Tab {
 
     @Composable
     override fun Content() {
-        Column(Modifier.fillMaxSize(), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
-            Text(text = "Reports")
+        Column(Modifier.fillMaxSize().background(blue1), verticalArrangement = Arrangement.Center, horizontalAlignment = Alignment.CenterHorizontally) {
+            Text(text = "COMING SOON" , color = darkYellow)
         }
     }
 }

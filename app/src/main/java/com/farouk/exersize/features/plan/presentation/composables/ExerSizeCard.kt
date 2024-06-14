@@ -1,4 +1,3 @@
-package com.mala.grad_project.Screenns.subsciptions
 
 import android.os.Build.VERSION.SDK_INT
 import androidx.compose.animation.AnimatedVisibility

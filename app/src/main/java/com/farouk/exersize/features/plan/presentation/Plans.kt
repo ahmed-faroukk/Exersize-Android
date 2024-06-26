@@ -98,7 +98,7 @@ object PlansTab : Tab {
                     }
                 }
             state.data?.status== true ->  {
-                if(state.data.msg.isEmpty()) {
+                if(state.data.msg.isEmpty() && state.data.payment_status == "COMPLETED") {
                     Column(
                         Modifier
                             .fillMaxSize()
@@ -123,7 +123,9 @@ object PlansTab : Tab {
                 else {
                     PlanUIScreen(getPlansResponse = state.data, viewModel  )
                 }
+
             }
+
 
             state.errorMsg.isNotEmpty() -> {
                 dialog.value = true
@@ -134,7 +136,13 @@ object PlansTab : Tab {
                     dialog.value = false
                 }, title = "Error", desc = state.errorMsg.toString())
             }
+            else->{
+                RetryIcon {
+                    viewModel.getTraineePlans()
+                }
+            }
         }
+
 
 
 

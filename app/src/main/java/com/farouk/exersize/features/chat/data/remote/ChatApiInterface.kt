@@ -23,7 +23,6 @@ interface ChatApiInterface {
     @POST(GET_CHAT)
     @FormUrlEncoded
     suspend fun getChatHistory(
-        @Field("chat_id") chat_id: String,
         @Field("token") token: String,
     ): ShowChatResponse
 

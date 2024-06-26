@@ -22,7 +22,7 @@ import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabNavigator
 import com.farouk.exersize.features.home.presentaion.HomeTab.HomeTab
 import com.farouk.exersize.features.menu.presentatoin.ChatTab
-import com.farouk.exersize.features.menu.presentatoin.MenuTab
+import com.farouk.exersize.features.menu.main.presentatoin.MenuTab
 import com.farouk.exersize.features.plan.presentation.PlansTab
 import com.farouk.exersize.features.reports.presentation.ReportsTab
 import com.farouk.exersize.theme.blue1

@@ -20,7 +20,9 @@ import com.pusher.client.connection.ConnectionState
 import com.pusher.client.connection.ConnectionStateChange
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableSharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.flow.launchIn
 import kotlinx.coroutines.flow.onEach
 import kotlinx.coroutines.launch
@@ -44,9 +46,8 @@ class ChatViewModel @Inject constructor(
     val userLocalDataSource: UserLocalDataSource,
 ) : ViewModel() {
 
-    val traineeChat = mutableListOf<MsgX>()
-
-
+   private val _traineeChat = MutableStateFlow<List<MsgX>>(emptyList())
+     val traineeChat = _traineeChat.asStateFlow()
 
     private val _sendMsgState = mutableStateOf(SendMsgUiState())
     val sendMsgState = _sendMsgState
@@ -94,13 +95,12 @@ class ChatViewModel @Inject constructor(
     }
 
     fun getChatHistory() {
-        chatUseCases.getChatUseCase.invoke(
-            _chatId.value, _token.value,
-        ).onEach {
+        chatUseCases.getChatUseCase.invoke(_token.value).onEach {
             when (it) {
                 is Resource.Success -> {
                     _getChatState.value = ChatUiState(data = it.data)
                     addChatHistoryToCHatUi()
+                    it.data?.chat_id?.let { it1 -> saveChatId(it1) }
                 }
 
                 is Resource.Loading -> {
@@ -144,7 +144,23 @@ class ChatViewModel @Inject constructor(
 
     fun addChatHistoryToCHatUi(){
         _getChatState.value.data?.let {
-            traineeChat.addAll(it.msg)
+            if (it.msg.isNotEmpty()){
+                _traineeChat.value = emptyList()
+                _traineeChat.value = it.msg
+            }
+        }
+    }
+    fun addMsg(msg :String){
+        _traineeChat.value += MsgX(
+            msg,
+            Sender.TRAINEE.toString().toLowerCase(),
+            LocalDateTime.now().toString()
+        )
+    }
+
+    fun saveChatId(chatId : String) {
+        viewModelScope.launch {
+            userLocalDataSource.saveChatUserId(chatId)
         }
     }
 
@@ -184,7 +200,11 @@ class ChatViewModel @Inject constructor(
             val sender = eventData.getString("sender")
             val msg = eventData.getString("message")
                 if (sender == "coach")
-             traineeChat.add(MsgX(msg , Sender.COACH.toString().toLowerCase() , LocalDateTime.now().toString()))
+                    _traineeChat.value += MsgX(
+                        msg,
+                        Sender.COACH.toString().toLowerCase(),
+                        LocalDateTime.now().toString()
+                    )
 
         }
     }

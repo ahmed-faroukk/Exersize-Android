@@ -66,7 +66,6 @@ import com.farouk.exersize.theme.brightYellow
 import com.farouk.exersize.theme.darkYellow
 import com.farouk.exersize.theme.sender
 import com.mala.grad_project.Screenns.CoachScreen.Conmposble.CircleCoachImage
-import java.time.LocalDateTime
 
 enum class Sender {
     COACH, TRAINEE
@@ -172,13 +171,8 @@ fun ChatUI(viewModel: ChatViewModel, messages : List<MsgX>,onclick: () -> Unit) 
             OutlinedCardWithTextAndButton(value = message.value, onValueChange = {
                 message.value = it
             }) {
-                viewModel.traineeChat.add(
-                    MsgX(
-                        message.value,
-                        Sender.TRAINEE.toString().toLowerCase(),
-                        LocalDateTime.now().toString()
-                    )
-                )
+
+                viewModel.addMsg(message.value)
                 viewModel.sendMsg(message.value)
                 message.value = ""
                 onclick()
@@ -222,7 +216,9 @@ fun AddFilesIcon(onClick: () -> Unit) {
 @Composable
 fun ChatContainer(viewModel: ChatViewModel , messages : List<MsgX>) {
     val chatListState = rememberLazyListState()
+
     LaunchedEffect(key1 = messages.size) {
+        if (messages.size>0)
         chatListState.scrollToItem(messages.size - 1)
     }
 

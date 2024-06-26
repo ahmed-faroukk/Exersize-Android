@@ -1,4 +1,4 @@
-package com.farouk.exersize.features.menu.presentatoin
+package com.farouk.exersize.features.menu.aboutus
 
 import androidx.compose.material.Text
 import androidx.compose.runtime.Composable

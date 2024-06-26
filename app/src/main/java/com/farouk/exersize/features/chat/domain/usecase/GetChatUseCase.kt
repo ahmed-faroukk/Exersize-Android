@@ -12,10 +12,10 @@ import javax.inject.Inject
 class GetChatUseCase @Inject constructor(
     private val repo : ChatRepo
 ){
-    operator fun invoke (chatId: String ,token : String) : Flow<Resource<ShowChatResponse>> = flow {
+    operator fun invoke (token : String) : Flow<Resource<ShowChatResponse>> = flow {
         emit(Resource.Loading())
         try {
-            val response = repo.getChatHistory(chatId , token)
+            val response = repo.getChatHistory(token)
             emit(Resource.Success(data = response))
         }catch (e : HttpException){
             emit(Resource.Error(message = "server exception" + e.message.toString() , data = null))

@@ -1,4 +1,4 @@
-package com.farouk.exersize.features.menu.presentatoin
+package com.farouk.exersize.features.menu.main.presentatoin
 
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.remember
@@ -9,6 +9,8 @@ import cafe.adriel.voyager.navigator.tab.Tab
 import cafe.adriel.voyager.navigator.tab.TabOptions
 import com.farouk.exersize.LocalTopNavigator
 import com.farouk.exersize.R
+import com.farouk.exersize.features.menu.MenuViewModel
+import com.farouk.exersize.features.menu.aboutus.AboutUsScreen
 import com.mala.grad_project.Screenns.Menu.MenuScreen
 
 object MenuTab : Tab {

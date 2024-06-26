@@ -1,13 +1,13 @@
-package com.farouk.exersize.features.menu.di
+package com.farouk.exersize.features.menu.profile.di
 
 
 import com.farouk.exersize.base.Constants.BASE_URL
-import com.farouk.exersize.features.menu.data.remote.ProfileApiInterface
-import com.farouk.exersize.features.menu.data.repo.ProfileRepoImpl
-import com.farouk.exersize.features.menu.domain.repo.ProfileRepo
-import com.farouk.exersize.features.menu.domain.usecases.ProfileUseCases
-import com.farouk.exersize.features.menu.domain.usecases.UnsubscribeUseCase
-import com.farouk.exersize.features.menu.domain.usecases.UpdateProfileUseCase
+import com.farouk.exersize.features.menu.profile.data.remote.ProfileApiInterface
+import com.farouk.exersize.features.menu.profile.data.repo.ProfileRepoImpl
+import com.farouk.exersize.features.menu.profile.domain.repo.ProfileRepo
+import com.farouk.exersize.features.menu.profile.domain.usecases.ProfileUseCases
+import com.farouk.exersize.features.menu.profile.domain.usecases.UnsubscribeUseCase
+import com.farouk.exersize.features.menu.profile.domain.usecases.UpdateProfileUseCase
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -55,7 +55,8 @@ object ProfileModule {
     // inject repo into use-case
     @Provides
     @Singleton
-    fun provideAuthUseCases(repo: ProfileRepo) = ProfileUseCases(UpdateProfileUseCase(repo),
+    fun provideAuthUseCases(repo: ProfileRepo) = ProfileUseCases(
+        UpdateProfileUseCase(repo),
         UnsubscribeUseCase(repo)
     )
 }

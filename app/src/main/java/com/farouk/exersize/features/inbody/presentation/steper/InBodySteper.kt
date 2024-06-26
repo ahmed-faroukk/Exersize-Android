@@ -42,7 +42,7 @@ import com.farouk.exersize.features.inbody.presentation.composables.ShowInBodyIn
 import com.farouk.exersize.features.inbody.presentation.screens.Gender
 import com.farouk.exersize.features.inbody.presentation.screens.GenderScreen
 import com.farouk.exersize.features.inbody.presentation.screens.UploadImageScreen
-import com.farouk.exersize.features.inbody.presentation.screens.UploadInBodyScreen
+import com.farouk.exersize.features.inbody.presentation.screens.UploadInbodyScreen
 import com.farouk.exersize.features.inbody.presentation.screens.UserDataScreen
 import com.farouk.exersize.theme.ExersizeTheme
 import com.farouk.exersize.theme.darkYellow
@@ -85,6 +85,9 @@ class StepperScreen() : Screen {
             val photoUri: MutableState<Uri?> = remember {
                 mutableStateOf(null)
             }
+            val inBodyImgUri: MutableState<Uri?> = remember {
+                mutableStateOf(null)
+            }
 
             val allowToMove = remember {
                 mutableStateOf(false)
@@ -112,7 +115,6 @@ class StepperScreen() : Screen {
                 mutableStateOf(false)
             }
 
-
             val navigator = LocalNavigator.currentOrThrow
             val context = LocalContext.current
 
@@ -124,7 +126,7 @@ class StepperScreen() : Screen {
                     reqIsSent.value = true
                 }
                 state.data?.status == false ->{
-                    currentStep--
+                    currentStep = 1
                 }
 
                 state.isLoading -> {
@@ -163,15 +165,17 @@ class StepperScreen() : Screen {
 
                 2 -> {
                     UserDataScreen(age, weight, tall)
-                    allowToMove.value =
-                        age.value.isNotEmpty() && weight.value.isNotEmpty() && tall.value.isNotEmpty()
+                    allowToMove.value = age.value.isNotEmpty() && weight.value.isNotEmpty() && tall.value.isNotEmpty()
                 }
 
                 3 -> {
                     allowToMove.value = true
-                    UploadInBodyScreen(inBodyPdfPath, selectedPdfUri) {
+                  /*  UploadInBodyScreen(inBodyPdfPath, selectedPdfUri) {
                         currentStep++
-                    }
+                    }*/
+                    UploadInbodyScreen(
+                        inBodyImgUri
+                    )
                 }
 
                 4 -> {
@@ -218,17 +222,22 @@ class StepperScreen() : Screen {
                             Log.d("pdf Path : ", selectedPdfUri.value.toString())
                             Log.d("img Path : ", photoUri.value.toString())
                             photoUri.value?.let {
-                                viewModel.sendInBodyData(
-                                    gender = userGender.value.toString(),
-                                    age = age.value,
-                                    weight = weight.value,
-                                    tall = tall.value,
-                                    token = viewModel.token.value,
-                                    inBodyFilePath = selectedPdfUri.value,
-                                    imgFilePath = it,
-                                    context = context
-                                )
+                                inBodyImgUri.value?.let { it1 ->
+                                    viewModel.sendInBodyData(
+                                        gender = userGender.value.toString(),
+                                        age = age.value,
+                                        weight = weight.value,
+                                        tall = tall.value,
+                                        token = viewModel.token.value,
+                                        inBodyFilePath = it1,
+                                        imgFilePath = it,
+                                        context = context,
+                                        navigator
+                                    )
+                                }
                             }
+                            currentStep--
+
                         }
                     },
                     enabled = currentStep <= numberStep,

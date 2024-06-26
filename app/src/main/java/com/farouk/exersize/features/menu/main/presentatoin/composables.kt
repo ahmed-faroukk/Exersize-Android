@@ -1,4 +1,4 @@
-package com.farouk.exersize.features.menu.presentatoin
+package com.farouk.exersize.features.menu.main.presentatoin
 
 
 import BlueButton
@@ -50,7 +50,7 @@ import coil.request.ImageRequest
 import com.farouk.exersize.R
 import com.farouk.exersize.features.home.presentaion.composables.BellImage
 import com.farouk.exersize.features.inbody.presentation.screens.CircleOutlinePreview
-import com.farouk.exersize.features.menu.domain.Entity.EditeProfileResponse
+import com.farouk.exersize.features.menu.profile.domain.Entity.EditeProfileResponse
 import com.farouk.exersize.theme.blue1
 import com.farouk.exersize.theme.darkYellow
 import com.mala.grad_project.Screenns.CoachScreen.Conmposble.CircleCoachImage
@@ -59,7 +59,7 @@ import outlineButton
 
 @Composable
 fun EditProfile(
-    UpdateProfile:EditeProfileResponse,
+    UpdateProfile: EditeProfileResponse,
     onSave: (String, String, String) -> Unit
 ) {
     var statfirstname by remember { mutableStateOf(  UpdateProfile.msg.fname) }

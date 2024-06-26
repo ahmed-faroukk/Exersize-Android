@@ -21,6 +21,7 @@ import androidx.compose.foundation.layout.width
 import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.MutableState
 import androidx.compose.ui.Alignment
@@ -68,6 +69,46 @@ fun UploadImageScreen(
     ) {
         Spacer(Modifier.height(30.dp))
 
+        CircleOutlinePreview(onclick = {
+            launcher.launch(
+                PickVisualMediaRequest(
+                    mediaType = ActivityResultContracts.PickVisualMedia.ImageOnly
+                )
+            )
+        }
+            , painter = painter)
+
+    }
+}
+@Composable
+fun UploadInbodyScreen(
+    uri: MutableState<Uri?>
+
+) {
+    val launcher = rememberLauncherForActivityResult(ActivityResultContracts.PickVisualMedia()) { URI ->
+        uri.value = URI
+    }
+
+    val painter = if (uri.value != null) {
+        rememberAsyncImagePainter(
+            ImageRequest.Builder(LocalContext.current)
+                .data(data = uri.value)
+                .build()
+        )
+    } else {
+        painterResource(id = R.drawable.baseline_image_24)
+    }
+
+    Column(
+        modifier = Modifier
+            .fillMaxWidth()
+            .background(MaterialTheme.colorScheme.primary)
+            .padding(10.dp),
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Spacer(Modifier.height(30.dp))
+
+        Text(text = "Upload your inBody")
         CircleOutlinePreview(onclick = {
             launcher.launch(
                 PickVisualMediaRequest(

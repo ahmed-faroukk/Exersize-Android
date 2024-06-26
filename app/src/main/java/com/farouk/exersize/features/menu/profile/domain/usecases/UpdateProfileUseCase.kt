@@ -1,7 +1,7 @@
-package com.farouk.exersize.features.menu.domain.usecases
+package com.farouk.exersize.features.menu.profile.domain.usecases
 
-import com.farouk.exersize.features.menu.domain.Entity.EditeProfileResponse
-import com.farouk.exersize.features.menu.domain.repo.ProfileRepo
+import com.farouk.exersize.features.menu.profile.domain.Entity.EditeProfileResponse
+import com.farouk.exersize.features.menu.profile.domain.repo.ProfileRepo
 import com.farouk.exersize.utils.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow

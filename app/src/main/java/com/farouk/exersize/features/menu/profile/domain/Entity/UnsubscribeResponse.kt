@@ -1,4 +1,4 @@
-package com.farouk.exersize.features.menu.domain.Entity
+package com.farouk.exersize.features.menu.profile.domain.Entity
 
 data class UnsubscribeResponse(
     val error_msg: String,

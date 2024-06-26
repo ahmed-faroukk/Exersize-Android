@@ -63,8 +63,7 @@ class InBodyViewModel @Inject constructor(
                 prepareStringPart(weight),
                 prepareStringPart(tall),
                 prepareStringPart(token),
-                //preparePdfPart(context , inBodyFilePath) ,
-                null,
+                imgToMultiPartUtil(context , inBodyFilePath) ,
                 imgToMultiPartUtil(context,  imgFilePath)
             ).onEach {
                 when (it) {

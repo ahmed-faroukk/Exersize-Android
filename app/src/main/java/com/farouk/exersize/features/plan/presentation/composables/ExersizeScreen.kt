@@ -18,6 +18,7 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontWeight
@@ -28,6 +29,7 @@ import com.farouk.exersize.features.plan.domain.Entitiy.Exercise
 import com.farouk.exersize.features.plan.domain.Entitiy.GetPlanResponse
 import com.farouk.exersize.theme.brightYellow
 import com.mala.grad_project.Screenns.CoachScreen.Conmposble.LineTextViewChoachScreen
+import com.mala.grad_project.newCardExersize.NewCardExersize
 
 
 @Composable
@@ -112,10 +114,12 @@ fun ExerSizeScreen(
                 LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
+                        ,
+                    horizontalAlignment = Alignment.CenterHorizontally
 
                 ) {
                     items(exercises) { exercise ->
-                        ExerSizeCard(exersize = exercise )
+                        NewCardExersize(exersize = exercise )
                     }
                 }
             }

@@ -1,7 +1,7 @@
-package com.farouk.exersize.features.menu.domain.repo
+package com.farouk.exersize.features.menu.profile.domain.repo
 
-import com.farouk.exersize.features.menu.domain.Entity.EditeProfileResponse
-import com.farouk.exersize.features.menu.domain.Entity.UnsubscribeResponse
+import com.farouk.exersize.features.menu.profile.domain.Entity.EditeProfileResponse
+import com.farouk.exersize.features.menu.profile.domain.Entity.UnsubscribeResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 

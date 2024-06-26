@@ -1,9 +1,9 @@
-package com.farouk.exersize.features.menu.data.repo
+package com.farouk.exersize.features.menu.profile.data.repo
 
-import com.farouk.exersize.features.menu.data.remote.ProfileApiInterface
-import com.farouk.exersize.features.menu.domain.Entity.EditeProfileResponse
-import com.farouk.exersize.features.menu.domain.Entity.UnsubscribeResponse
-import com.farouk.exersize.features.menu.domain.repo.ProfileRepo
+import com.farouk.exersize.features.menu.profile.data.remote.ProfileApiInterface
+import com.farouk.exersize.features.menu.profile.domain.Entity.EditeProfileResponse
+import com.farouk.exersize.features.menu.profile.domain.Entity.UnsubscribeResponse
+import com.farouk.exersize.features.menu.profile.domain.repo.ProfileRepo
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import javax.inject.Inject

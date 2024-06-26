@@ -1,7 +1,7 @@
-package com.farouk.exersize.features.menu.data.remote
+package com.farouk.exersize.features.menu.profile.data.remote
 
-import com.farouk.exersize.features.menu.domain.Entity.EditeProfileResponse
-import com.farouk.exersize.features.menu.domain.Entity.UnsubscribeResponse
+import com.farouk.exersize.features.menu.profile.domain.Entity.EditeProfileResponse
+import com.farouk.exersize.features.menu.profile.domain.Entity.UnsubscribeResponse
 import okhttp3.MultipartBody
 import okhttp3.RequestBody
 import retrofit2.http.Field

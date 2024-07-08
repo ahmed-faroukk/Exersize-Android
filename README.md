@@ -61,6 +61,8 @@ This Android application is designed to revolutionize the coaching industry in E
 - **Real-Time Chat:** Facilitate real-time communication between coaches and trainees for instant feedback, guidance, and support.
 - **Time-Saving Convenience:** Offer remote training and follow-up capabilities, saving time by eliminating the need for frequent gym visits.
 - **Marketing Support for Coaches:** Provide coaches with effective marketing methods to acquire new clients and expand their business. Offer tools for organizing and managing client relationships, streamlining administrative tasks, and enhancing overall efficiency.
+- **Monthly Report for Trainees:** Generate and view detailed monthly reports, summarizing progress, performance, and adherence to training plans.
+- **Comprehensive Training Plans:** Display all training plans, including instructions on exercises, sets, reps, and breaks for each day of the week.
 
 # Technology Stack
 

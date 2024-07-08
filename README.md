@@ -14,15 +14,14 @@
     <td><img src="https://github.com/ahmed-faroukk/Exersize/assets/72602749/661e91fb-0252-4261-9e68-e136b7f048b3" width="100" /></td>
     <td><img src="https://github.com/ahmed-faroukk/Exersize/assets/72602749/a42774a7-dc1f-4a77-aef6-9b9c4230cd2c" width="100" /></td>
     <td><img src="https://github.com/ahmed-faroukk/Exersize/assets/72602749/12301ca7-cf9d-4c76-be4f-12e345a391a8" width="100" /></td>
-    <td><img src="https://github.com/ahmed-faroukk/Exersize/assets/72602749/2c01fddf-6bcd-4e34-bb18-ae3b3160dba1" width="100" /></td>
   </tr>
   <tr>
+    <td><img src="https://github.com/ahmed-faroukk/Exersize/assets/72602749/2c01fddf-6bcd-4e34-bb18-ae3b3160dba1" width="100" /></td>
     <td><img src="https://github.com/ahmed-faroukk/Exersize/assets/72602749/febc106d-c864-4c1f-b2c1-80740590dcbc" width="100" /></td>
     <td><img src="https://github.com/ahmed-faroukk/Exersize/assets/72602749/d0945cfe-59b9-4277-8523-0663e6db7a69" width="100" /></td>
     <td><img src="https://github.com/ahmed-faroukk/Exersize/assets/72602749/3e00d36e-965b-49f5-a377-0be441e1c004" width="100" /></td>
     <td><img src="https://github.com/ahmed-faroukk/Exersize/assets/72602749/9cb4e364-ff24-407b-b8f6-7df1c85ec7d8" width="100" /></td>
-    <td><img src="https://github.com/ahmed-faroukk/Exersize/assets/72602749/7d3dc3db-fdb3-4256-b90c-758c0c319b43" width="100" /></td>
-    <td><img src="https://github.com/ahmed-faroukk/Exersize/assets/72602749/c441b1ab-68f8-4843-8651-f3a1badc0403" width="100" /></td>
+
   </tr>
   <tr>
     <td><img src="https://github.com/ahmed-faroukk/Exersize/assets/72602749/6a298a74-9e0b-461c-b443-91fdbf202afc" width="100" /></td>
@@ -44,6 +43,10 @@
     <td><img src="https://github.com/ahmed-faroukk/Exersize/assets/72602749/e44b9c62-7688-4598-b606-449d2556b08f" width="100" /></td>
     <td><img src="https://github.com/ahmed-faroukk/Exersize/assets/72602749/82f76ae6-4459-45a0-a6f4-cc985d027d1f" width="100" /></td>
     <td><img src="https://github.com/ahmed-faroukk/Exersize/assets/72602749/82731f03-1e4f-4c73-8343-6a4d913f5ff4" width="100" /></td>
+    <td><img src="https://github.com/ahmed-faroukk/Exersize/assets/72602749/7d3dc3db-fdb3-4256-b90c-758c0c319b43" width="100" /></td>
+  </tr>
+  <tr>
+        <td><img src="https://github.com/ahmed-faroukk/Exersize/assets/72602749/c441b1ab-68f8-4843-8651-f3a1badc0403" width="100" /></td>
 
   </tr>
 
